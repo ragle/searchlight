@@ -64,7 +64,7 @@
 </li>
 <li> <a href="#directory-structure">Directory Structure</a>
 </li>
-<li> <a href="#objects-available-to-your-search-module">Objects Available to your Search Module</a>
+<li> <a href="#objects-available-to-your-search-module">Objects Available to the Search Module</a>
 
 <ul>
 <li> <a href="#searchabledocument">SearchableDocument</a>
@@ -113,9 +113,11 @@
 </li>
 </ul>
 </li>
-</ul><hr><p><a name="introduction"></a></p>
+</ul>
 
-<h1>Introduction</h1>
+<p><a name="introduction"></a></p>
+
+<h1 class="topic-header">Introduction</h1>
 
 <p>Searchlight is a simple application development framework that allows any organization with a VIVO database to quickly and easily deploy a VIVO searchlight application of their own.</p>
 
@@ -123,9 +125,9 @@
 
 <p>While searchlight is a node.js application, it was designed to abstract away as much node / JavaScript specific domain knowledge as possible - as many developers working on the VIVO project may not be familiar with JavaScript (especially on the server).</p>
 
-<hr><p><a name="quick-start-tutorial"></a></p>
+<p><a name="quick-start-tutorial"></a></p>
 
-<h1>Quick Start Tutorial</h1>
+<h1 class="topic-header">Quick Start Tutorial</h1>
 
 <p><a name="setting-up-a-development-environment"></a></p>
 
@@ -345,20 +347,21 @@
 
 <p><a name="dependencies"></a></p>
 
-<h1>Dependencies</h1>
+<h1 class="topic-header">Dependencies</h1>
 
 <p><a name="client"></a></p>
 
-<h2>Client Side Dependencies</h2>
+<h3>Client Side Dependencies</h3>
 
 <p>The client side dependencies are met for you within the <code>/public/javascripts/</code> directory. Currently, they include:</p>
 
 <ul>
 <li> <a href="http://api.jquery.com/">jQuery</a> - for DOM manipulation, UI functionality &amp; AJAX functionality</li>
 <li> <a href="http://ternarylabs.github.com/porthole/">Porthole</a> - To provide a proxy for cross domain requests to the node-vivo-searchlight server
+</li></ul>
 <a name="server"></a>
-##Server Side Dependencies</li>
-</ul><p>All of these dependencies can be satisfied automatically by running <code>npm install</code> after cloning into the searchlight repo. (See the <a href="#quick-start-tutorial">quick start tutorial</a> on <a href="#setting-up-a-development-environment-linux">setting up a dev environment</a> for more details). </p>
+<h3>Server Side Dependencies</h3>
+<p>All of these dependencies can be satisfied automatically by running <code>npm install</code> after cloning into the searchlight repo. (See the <a href="#quick-start-tutorial">quick start tutorial</a> on <a href="#setting-up-a-development-environment-linux">setting up a dev environment</a> for more details). </p>
 
 <p>A number of fantastic 3rd party node.js packages / libraries were used in the development of node-vivo-searchlight. In general, the use of these libraries is abstracted for you and you will not need to use them in your code - with the exception of a search index client, sanitizr and perhaps bond if you like to handle asynchronous operations with promises. </p>
 
@@ -372,9 +375,11 @@
 <li> <a href="https://github.com/coolaj86/node-jquery">jQuery</a> - As a simple wrapper on the jQuery library for server-side use</li>
 <li> <a href="https://github.com/mikeal/request">request</a> - As a means of making HTTP requests to remote servers as necessary</li>
 <li> <a href="https://github.com/flatiron/winston">winston</a> - For async error logging / reporting</li>
-</ul><hr><p><a name="directory-structure"></a></p>
+</ul>
 
-<h1>Directory Structure</h1>
+<p><a name="directory-structure"></a></p>
+
+<h1 class="topic-header">Directory Structure</h1>
 
 <p>You should really only ever be modifying code in the <code>customizations/</code> directory, unless you need to do some framework hacking for your use case.</p>
 
@@ -420,13 +425,13 @@
 └── app.js                        //  Application entry point
 </code></pre>
 
-<hr><p><a name="objects-available-to-your-search-module"></a></p>
+<p><a name="objects-available-to-your-search-module"></a></p>
 
-<h1>Objects available to your search module</h1>
+<h1 class="topic-header">Objects available to the search module</h1>
 
-<hr><p><a name="searchabledocument"></a></p>
+<p><a name="searchabledocument"></a></p>
 
-<h1>SearchableDocument</h1>
+<h2 class="object-class">SearchableDocument</h2>
 
 <p>Server side DOM wrapper for search request sent from the client. Enables extraction of main content and removal of HTML, JavaScript and CSS.</p>
 
@@ -434,12 +439,13 @@
 
 <p><a name="properties"></a></p>
 
-<h2>Properties</h2>
+<h3>Properties</h3>
 
 <h3><code>wordCount</code></h3>
 
 <p><em>int</em> Contains a word count. Set by <code>SearchableDocument.setWordCount()</code></p>
 
+<a name="querytext"></a>
 <h3><code>queryText</code></h3>
 
 <p><em>string</em> - Contains the best text available (as determined by <code>init()</code>) for querying the search index of your choice</p>
@@ -462,8 +468,9 @@
 
 <p><a name="methods"></a></p>
 
-<h2>Methods</h2>
+<h3>Methods</h3>
 
+<a name="searchabledocumentinitreadabilityparse"></a>
 <h3><code>SearchableDocument.init(readabilityParse)</code></h3>
 
 <p><strong>Params</strong></p>
@@ -476,6 +483,7 @@
 
 <p><strong>Post Condition</strong> - <code>SearchableDocument.queryText</code> is available to be sent to a Search Index of your choice</p>
 
+<a name="searchabledocumentreadabilityparse"></a>
 <hr><h3><code>SearchableDocument.readabilityParse()</code></h3>
 
 <p><strong>Params</strong> - none</p>
@@ -543,15 +551,15 @@
 
 <p><a name="extending-the-searchabledocument-object"></a></p>
 
-<h2>Extending the SearchableDocument Object</h2>
+<h3>Extending the SearchableDocument Object</h3>
 
-<p>You may need to augment the SearchableDocument object with methods or properties unique to your use case. You can encapsulate this data and behaviour by modifying the object literal <code>ExtendSearchableDocument</code> within <code>/modules/SearchableDocument.js</code>.</p>
+<p>You may need to augment the SearchableDocument object with methods or properties unique to your use case. You can encapsulate this data and behaviour by modifying the object literal <code>ExtendSearchableDocument</code> within <code>customizations/SearchableDocument.js</code>.</p>
 
-<p>Any properties or methods you add to this object literal will be added to the prototype of the <code>SearchableDocument</code> object before it is instantiated. You can therefore use the <code>this</code> operator safely, as the context of <code>this</code> will be the instance of <code>SearchableDocument</code> that you receive in your search module (<code>/modules/search.js</code>).</p>
+<p>Any properties or methods you add to this object literal will be added to the prototype of the <code>SearchableDocument</code> object before it is instantiated. You can therefore use the <code>this</code> operator safely, as the context of <code>this</code> will be the instance of <code>SearchableDocument</code> that you receive in your search module (<code>customizations/search.js</code>).</p>
 
 <p><strong>Example</strong></p>
 
-<p>inside <code>/modules/SearchableDocument.js</code>:</p>
+<p>inside <code>customizations/SearchableDocument.js</code>:</p>
 
 <div class="highlight"><pre><span class="kd">var</span> <span class="nx">ExtendSearchableDocument</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">foo</span><span class="o">:</span> <span class="s1">'bar'</span><span class="p">,</span>
@@ -559,7 +567,7 @@
 <span class="p">}</span>
 </pre></div>
 
-<p>inside <code>/modules/SearchableDocument.js</code>:</p>
+<p>inside <code>customizations/search.js</code>:</p>
 
 <div class="highlight"><pre><span class="nx">exports</span><span class="p">.</span><span class="nx">execute</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">SearchableDocument</span><span class="p">,</span> <span class="nx">ResultSet</span><span class="p">,</span> <span class="nx">err</span><span class="p">){</span>
     <span class="nx">SearchableDocument</span><span class="p">.</span><span class="nx">printFoo</span><span class="p">();</span>
@@ -569,7 +577,7 @@
 
 <hr><p><a name="resultset"></a></p>
 
-<h1>ResultSet</h1>
+<h2 class="object-class">ResultSet</h2>
 
 <p>The <code>ResultSet</code> Object provides a simple API to create a uniform data structure that the default results view template can consume.</p>
 
@@ -577,7 +585,7 @@
 
 <p><a name="properties-1"></a></p>
 
-<h2>Properties</h2>
+<h3>Properties</h3>
 
 <h3><code>list</code></h3>
 
@@ -594,8 +602,9 @@
 
 <p><a name="methods-1"></a></p>
 
-<h2>Methods</h2>
+<h3>Methods</h3>
 
+<a name="resultsetaddresultparams"></a>
 <h3><code>ResultSet.addResult({params})</code></h3>
 
 <p><strong>Params</strong></p>
@@ -632,6 +641,7 @@
 <li> Score - <em>int</em> - a number between 1-5 that describes how accurate your result set is.</li>
 </ul><p><strong>Description</strong> - sets <code>ResultSet.score</code> to <code>score</code>. Because scoring is highly subjective, you will need to write some logic to decide how accurate the results you are getting back from your search index are on a scale of 1-5. This score is displayed to the user in the default view template. If you are using a custom view template, setting a score isn't strictly necessary. </p>
 
+<a name="resultsetsend"></a>
 <hr><h3><code>ResultSet.send()</code></h3>
 
 <p><strong>Params</strong>: none</p>
@@ -640,20 +650,21 @@
 
 <p><a name="making-requests-to-a-search-index"></a></p>
 
-<h1>Making Requests to a Search Index</h1>
+<h1 class="topic-header">Making Requests to a Search Index</h1>
 
 <p>Within your search module (<code>customizations/search.js</code>), you will need to query a search index for VIVO profiles relevant to the text you received from the client. A request module is available for you in <code>lib/request.js</code> that makes this process easier.</p>
 
 <p><a name="the-request-module"></a></p>
 
-<h1>The Request Module</h1>
+<h1 class="topic-header">The Request Module</h1>
 
 <p>The request module offers a thin wrapper for <a href="https://github.com/mikeal/request">request</a> that abstracts error handling and returns promises for responses using <a href="https://github.com/pete-otaqui/bond">bond</a>. Bond is a super simple promises implementation that is really easy to use. See the examples below for more details.</p>
 
 <p>The request module is available to you as <code>request</code> within your search module (<code>customizations/search.js</code>). </p>
 
-<h2>Exports</h2>
+<h3>Exports</h3>
 
+<a name="posturi-opts-next"></a>
 <h3><code>post(uri, opts, next)</code></h3>
 
 <p><strong>params</strong> </p>
@@ -698,7 +709,7 @@
 
 <p><a name="creating-a-custom-view-template"></a></p>
 
-<h1>Creating a Custom View Template</h1>
+<h1 class="topic-header">Creating a Custom View Template</h1>
 
 <p>Using custom view templates for a bookmarklet iframe, widget or result set is easy. Simply follow the naming conventions you see inside <code>customizations/views/</code>. For example - if you would like to use a custom iframe template, replace <code>bar-iframe.html.example</code> with your own template, <code>bar-iframe.html</code>. </p>
 
@@ -706,7 +717,7 @@
 
 <p><a name="public-assets-stylesheets-javascript-images"></a></p>
 
-<h1>Public Assets</h1>
+<h1 class="topic-header">Public Assets</h1>
 
 <p>Two publicly available static directories exist in every searchlight application. The first, is the default <code>/public</code> directory, which stores image, javascript and style assets for the default view templates.</p>
 
@@ -719,7 +730,7 @@
 
 <p><a name="custom-client-side-behavior"></a></p>
 
-<h1>Custom Client Side Behavior</h1>
+<h1 class="topic-header">Custom Client Side Behavior</h1>
 
 <p>Currently, there are very few avenues for modifying application specific client side behavior without getting in and hacking framework code in <code>lib/client/</code>. If you need to add analytics code, or some other JavaScript for your use case, you can add it in <code>customizations/public/javascripts/custom.js</code>. </p>
 
@@ -727,7 +738,7 @@
 
 <p><a name="building-the-front-end"></a></p>
 
-<h1>Building the Front End</h1>
+<h1 class="topic-header">Building the Front End</h1>
 
 <p>The default front end is built for you already. If you need to rebuild it for some reason (e.g. you've been doing some hacking in <code>lib/client/</code>) you can do so by adding <code>-b</code> as an option when you start the server. </p>
 
@@ -743,7 +754,7 @@
 
 <p><a name="error-handling"></a></p>
 
-<h1>Error Handling</h1>
+<h1 class="topic-header">Error Handling</h1>
 
 <p><a name="handling-an-error"></a></p>
 
@@ -769,7 +780,7 @@
 
 <p><a name="error-logging"></a></p>
 
-<h3>Error Logging</h3>
+<h3 id="err-log">Error Logging</h3>
 
 <p><code>lib/ErrorHandler.js</code> contains a thin wrapper for <a href="https://github.com/flatiron/winston">Winston</a>. It is used internally as middleware for express. Both console and filesystem transports are used for logging, with errors logged in <code>/logs/error.log.json</code>. See the Winston documentation for details about querying the log file programatically - which can be quite useful for testing and debugging. </p>
 
@@ -782,7 +793,7 @@
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Searchlight Documentation maintained by <a href="https://github.com/ragle">ragle</a></p>
+        <p class="copyright"><a href="https://github.com/ragle/searchlight">Searchlight</a> is maintained by <a href="https://github.com/ragle">ragle</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>

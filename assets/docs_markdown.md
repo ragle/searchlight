@@ -11,7 +11,7 @@
   *  [Client](#client)
   *  [Server](#server)
 *  [Directory Structure](#directory-structure)
-*  [Objects Available to your Search Module](#objects-available-to-your-search-module)
+*  [Objects Available to the Search Module](#objects-available-to-your-search-module)
   *  [SearchableDocument](#searchabledocument)
      *  [Properties](#properties)
      *  [Methods](#methods)
@@ -29,7 +29,7 @@
   *  [Handling an Error](#handling-an-error)
   *  [Error Logging](#error-logging)
 
----
+
 <a name="introduction"></a>
 #Introduction
 Searchlight is a simple application development framework that allows any organization with a VIVO database to quickly and easily deploy a VIVO searchlight application of their own.
@@ -38,7 +38,6 @@ To learn more about VIVO searchlight apps and see a demo, check out our [about p
 
 While searchlight is a node.js application, it was designed to abstract away as much node / JavaScript specific domain knowledge as possible - as many developers working on the VIVO project may not be familiar with JavaScript (especially on the server).
 
----
 <a name="quick-start-tutorial"></a>
 #Quick Start Tutorial
 
@@ -261,13 +260,15 @@ Feel free to log an issue and make a pull request if you find any errors!
 <a name="dependencies"></a>
 #Dependencies
 <a name="client"></a>
-##Client Side Dependencies
+###Client Side Dependencies
 
 The client side dependencies are met for you within the ```/public/javascripts/``` directory. Currently, they include:
 *  [jQuery](http://api.jquery.com/) - for DOM manipulation, UI functionality & AJAX functionality
 *  [Porthole](http://ternarylabs.github.com/porthole/) - To provide a proxy for cross domain requests to the node-vivo-searchlight server
+
+
 <a name="server"></a>
-##Server Side Dependencies
+###Server Side Dependencies
 
 All of these dependencies can be satisfied automatically by running ```npm install``` after cloning into the searchlight repo. (See the [quick start tutorial](#quick-start-tutorial) on [setting up a dev environment](#setting-up-a-development-environment-linux) for more details). 
 
@@ -283,7 +284,7 @@ A number of fantastic 3rd party node.js packages / libraries were used in the de
 *  [request](https://github.com/mikeal/request) - As a means of making HTTP requests to remote servers as necessary
 *  [winston](https://github.com/flatiron/winston) - For async error logging / reporting
 
----
+
 <a name="directory-structure"></a>
 #Directory Structure
 
@@ -333,22 +334,22 @@ You should really only ever be modifying code in the ```/customizations/``` dire
 └── app.js                        //  Application entry point
 ```
 
----
 <a name="objects-available-to-your-search-module"></a>
-#Objects available to your search module
+#Objects available to the search module
 
----
+
 <a name="searchabledocument"></a>
-#SearchableDocument
+##SearchableDocument
 Server side DOM wrapper for search request sent from the client. Enables extraction of main content and removal of HTML, JavaScript and CSS.
 
 [The SearchableDocument object can be easily extended](#extending-the-searchabledocument-object) with methods specific to your use case. Note that manipulating parent SearchableDocument properties prepended by '_' via non-parent methods may have unintended consequences.
 
 <a name="properties"></a>
-##Properties
+###Properties
 ###```wordCount```
 *int* Contains a word count. Set by ```SearchableDocument.setWordCount()```
 
+<a name="querytext"></a>
 ###```queryText```
 
 *string* - Contains the best text available (as determined by ```init()```) for querying the search index of your choice
@@ -370,7 +371,8 @@ Server side DOM wrapper for search request sent from the client. Enables extract
 *Object* - Contains a server side jQuery object. Can be used in your DOM manipulation methods if you extend the Searchable Document object for your own use case. 
 
 <a name="methods"></a>
-##Methods
+###Methods
+<a name="searchabledocumentinitreadabilityparse"></a>
 ###```SearchableDocument.init(readabilityParse)```
 
 **Params**
@@ -382,6 +384,7 @@ Server side DOM wrapper for search request sent from the client. Enables extract
 
 **Post Condition** - ```SearchableDocument.queryText``` is available to be sent to a Search Index of your choice
 
+<a name="searchabledocumentreadabilityparse"></a>
 ---
 ###```SearchableDocument.readabilityParse()```
 
@@ -458,14 +461,14 @@ Note that it will check ```queryText``` first, but if it doesn't find anything, 
 **Returns** - void
 
 <a name="extending-the-searchabledocument-object"></a>
-##Extending the SearchableDocument Object
-You may need to augment the SearchableDocument object with methods or properties unique to your use case. You can encapsulate this data and behaviour by modifying the object literal ```ExtendSearchableDocument``` within ```/modules/SearchableDocument.js```.
+###Extending the SearchableDocument Object
+You may need to augment the SearchableDocument object with methods or properties unique to your use case. You can encapsulate this data and behaviour by modifying the object literal ```ExtendSearchableDocument``` within ```customizations/SearchableDocument.js```.
 
-Any properties or methods you add to this object literal will be added to the prototype of the ```SearchableDocument``` object before it is instantiated. You can therefore use the ```this``` operator safely, as the context of ```this``` will be the instance of ```SearchableDocument``` that you receive in your search module (```/modules/search.js```).
+Any properties or methods you add to this object literal will be added to the prototype of the ```SearchableDocument``` object before it is instantiated. You can therefore use the ```this``` operator safely, as the context of ```this``` will be the instance of ```SearchableDocument``` that you receive in your search module (```customizations/search.js```).
 
 **Example**
 
-inside ```/modules/SearchableDocument.js```:
+inside ```customizations/SearchableDocument.js```:
 
 ```javascript
 var ExtendSearchableDocument = {
@@ -474,7 +477,7 @@ var ExtendSearchableDocument = {
 }
 ```
 
-inside ```/modules/SearchableDocument.js```:
+inside ```customizations/search.js```:
 ```javascript
 exports.execute = function(SearchableDocument, ResultSet, err){
     SearchableDocument.printFoo();
@@ -483,13 +486,13 @@ exports.execute = function(SearchableDocument, ResultSet, err){
 ```
 ---
 <a name="resultset"></a>
-#ResultSet
+##ResultSet
 The ```ResultSet``` Object provides a simple API to create a uniform data structure that the default results view template can consume.
 
 More importantly, a method is included to ```send()``` your result set to the rendering engine once you have finished populating it.
 
 <a name="properties-1"></a>
-##Properties
+###Properties
 ###```list```
 *array* - An array containing a list of results to be displayed in the view template
 
@@ -501,8 +504,9 @@ More importantly, a method is included to ```send()``` your result set to the re
 *int* - A subjective measure of how accurate your results are, on a scale of 1-5
 
 <a name="methods-1"></a>
-##Methods
+###Methods
 
+<a name="resultsetaddresultparams"></a>
 ###```ResultSet.addResult({params})```
 
 **Params**
@@ -537,6 +541,7 @@ If you have defined a custom view template, pass in what you need instead. For e
 
 ---
 
+<a name="resultsetsend"></a>
 ###```ResultSet.send()```
 
 **Params**: none
@@ -553,8 +558,9 @@ The request module offers a thin wrapper for [request](https://github.com/mikeal
 
 The request module is available to you as ```request``` within your search module (```customizations/search.js```). 
 
-##Exports
+###Exports
 
+<a name="posturi-opts-next"></a>
 ###```post(uri, opts, next)```
 
 **params** 
