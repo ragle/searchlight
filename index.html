@@ -37,7 +37,7 @@
 <li> <a href="#quick-start-tutorial">Quick Start Tutorial</a>
 
 <ul>
-<li> <a href="#setting-up-a-development-environment-linux">Setting up a Development Environment</a>
+<li> <a href="#setting-up-a-development-environment">Setting up a Development Environment</a>
 </li>
 <li> <a href="#creating-a-bookmarklet">Creating a Searchlight Bookmarklet</a>
 </li>
@@ -113,7 +113,9 @@
 </li>
 </ul>
 </li>
-</ul><hr><h1>Introduction</h1>
+</ul><hr><p><a name="introduction"></a></p>
+
+<h1>Introduction</h1>
 
 <p>Searchlight is a simple application development framework that allows any organization with a VIVO database to quickly and easily deploy a VIVO searchlight application of their own.</p>
 
@@ -121,7 +123,11 @@
 
 <p>While searchlight is a node.js application, it was designed to abstract away as much node / JavaScript specific domain knowledge as possible - as many developers working on the VIVO project may not be familiar with JavaScript (especially on the server).</p>
 
-<hr><h1>Quick Start Tutorial</h1>
+<hr><p><a name="quick-start-tutorial"></a></p>
+
+<h1>Quick Start Tutorial</h1>
+
+<p><a name="setting-up-a-development-environment"></a></p>
 
 <h3>Setting up a Development Environment (Linux)</h3>
 
@@ -136,7 +142,9 @@
 </li>
 <li> <code>$ npm install</code>
 </li>
-</ul><hr><h3>Creating a Bookmarklet</h3>
+</ul><hr><p><a name="creating-a-bookmarklet"></a></p>
+
+<h3>Creating a Bookmarklet</h3>
 
 <p>Below is the world's simplest HTML document. You'll probably want to create a better landing page than this (<a href="http://about.vivosearchlight.org">see our demo</a>), but for testing, this is fine. </p>
 
@@ -152,7 +160,9 @@
 <span class="nt">&lt;/html&gt;</span>
 </pre></div>
 
-<hr><h3>Creating a Widget</h3>
+<hr><p><a name="creating-a-widget"></a></p>
+
+<h3>Creating a Widget</h3>
 
 <p>You might also like to use a searchlight widget on one of your organization's pages. For example, you may have a news page that is updated regularly, and you'd like to always display VIVO profiles relevant to your latest updates. </p>
 
@@ -172,7 +182,9 @@
 <span class="nt">&lt;/html&gt;</span>
 </pre></div>
 
-<hr><h3>Writing a Search Module</h3>
+<hr><p><a name="writing-a-search-module"></a></p>
+
+<h3>Writing a Search Module</h3>
 
 <p>The framework expects your search module (<code>customizations/search.js</code>) to export a single function, <code>exports.execute(SearchableDocument, ResultSet, next){}</code>. </p>
 
@@ -248,7 +260,9 @@
 
 <p>If you've already <a href="#creating-the-bookmarklet">installed the bookmarklet</a>, you can run it on a page of your choice! Congratulations, you've just processed your first searchlight request, start to finish!</p>
 
-<hr><h3>Querying a Search Index</h3>
+<hr><p><a name="querying-a-search-index"></a></p>
+
+<h3>Querying a Search Index</h3>
 
 <p>Now that we're successfully processing requests to our app, let's try to find some VIVO profiles relevant to the text the client sent us. </p>
 
@@ -290,7 +304,9 @@
 
 <p>If all goes well, you should see a JSON object full of relevant VIVO profiles in your console!</p>
 
-<hr><h3>Populating the Result Set</h3>
+<hr><p><a name="populating-the-result-set"></a></p>
+
+<h3>Populating the Result Set</h3>
 
 <p>Now that we have some profiles, let's get them into our <a href="#resultset">ResultSet</a> object so we can send them to the client. </p>
 
@@ -317,7 +333,9 @@
 
 <p>Of course, this is a very simplistic example. Depending on how complex the data structure you get back from your search index is - you may have to do additional data marshaling or processing. You'll probably want to move functionality relevant to the ResultSet over to it's own function, and do all sorts of other cool stuff as well. </p>
 
-<hr><h3>Finishing Up</h3>
+<hr><p><a name="finishing-up"></a></p>
+
+<h3>Finishing Up</h3>
 
 <p>Assuming you've installed the bookmarklet and have properly set up your search index - you should be seeing results in the client side app! </p>
 
@@ -325,7 +343,11 @@
 
 <p>Feel free to log an issue and make a pull request if you find any errors!</p>
 
+<p><a name="dependencies"></a></p>
+
 <h1>Dependencies</h1>
+
+<p><a name="client"></a></p>
 
 <h2>Client Side Dependencies</h2>
 
@@ -333,10 +355,10 @@
 
 <ul>
 <li> <a href="http://api.jquery.com/">jQuery</a> - for DOM manipulation, UI functionality &amp; AJAX functionality</li>
-<li> <a href="http://ternarylabs.github.com/porthole/">Porthole</a> - To provide a proxy for cross domain requests to the node-vivo-searchlight server</li>
-</ul><h2>Server Side Dependencies</h2>
-
-<p>All of these dependencies can be satisfied automatically by running <code>npm install</code> after cloning into the searchlight repo. (See the <a href="#quick-start-tutorial">quick start tutorial</a> on <a href="#setting-up-a-development-environment-linux">setting up a dev environment</a> for more details). </p>
+<li> <a href="http://ternarylabs.github.com/porthole/">Porthole</a> - To provide a proxy for cross domain requests to the node-vivo-searchlight server
+<a name="server"></a>
+##Server Side Dependencies</li>
+</ul><p>All of these dependencies can be satisfied automatically by running <code>npm install</code> after cloning into the searchlight repo. (See the <a href="#quick-start-tutorial">quick start tutorial</a> on <a href="#setting-up-a-development-environment-linux">setting up a dev environment</a> for more details). </p>
 
 <p>A number of fantastic 3rd party node.js packages / libraries were used in the development of node-vivo-searchlight. In general, the use of these libraries is abstracted for you and you will not need to use them in your code - with the exception of a search index client, sanitizr and perhaps bond if you like to handle asynchronous operations with promises. </p>
 
@@ -350,7 +372,9 @@
 <li> <a href="https://github.com/coolaj86/node-jquery">jQuery</a> - As a simple wrapper on the jQuery library for server-side use</li>
 <li> <a href="https://github.com/mikeal/request">request</a> - As a means of making HTTP requests to remote servers as necessary</li>
 <li> <a href="https://github.com/flatiron/winston">winston</a> - For async error logging / reporting</li>
-</ul><hr><h1>Directory Structure</h1>
+</ul><hr><p><a name="directory-structure"></a></p>
+
+<h1>Directory Structure</h1>
 
 <p>You should really only ever be modifying code in the <code>/customizations/</code> directory, unless you need to do some framework hacking for your use case.</p>
 
@@ -396,13 +420,19 @@
 └── app.js                        //  Application entry point
 </code></pre>
 
-<hr><h1>Objects available to your search module</h1>
+<hr><p><a name="objects-available-to-your-search-module"></a></p>
 
-<hr><h1>SearchableDocument</h1>
+<h1>Objects available to your search module</h1>
+
+<hr><p><a name="searchabledocument"></a></p>
+
+<h1>SearchableDocument</h1>
 
 <p>Server side DOM wrapper for search request sent from the client. Enables extraction of main content and removal of HTML, JavaScript and CSS.</p>
 
 <p><a href="#extending-the-searchabledocument-object">The SearchableDocument object can be easily extended</a> with methods specific to your use case. Note that manipulating parent SearchableDocument properties prepended by '_' via non-parent methods may have unintended consequences.</p>
+
+<p><a name="properties"></a></p>
 
 <h2>Properties</h2>
 
@@ -429,6 +459,8 @@
 <h3><code>_$</code></h3>
 
 <p><em>Object</em> - Contains a server side jQuery object. Can be used in your DOM manipulation methods if you extend the Searchable Document object for your own use case. </p>
+
+<p><a name="methods"></a></p>
 
 <h2>Methods</h2>
 
@@ -509,6 +541,8 @@
 
 <p><strong>Returns</strong> - void</p>
 
+<p><a name="extending-the-searchabledocument-object"></a></p>
+
 <h2>Extending the SearchableDocument Object</h2>
 
 <p>You may need to augment the SearchableDocument object with methods or properties unique to your use case. You can encapsulate this data and behaviour by modifying the object literal <code>ExtendSearchableDocument</code> within <code>/modules/SearchableDocument.js</code>.</p>
@@ -533,11 +567,15 @@
 <span class="p">}</span>
 </pre></div>
 
-<hr><h1>ResultSet</h1>
+<hr><p><a name="resultset"></a></p>
+
+<h1>ResultSet</h1>
 
 <p>The <code>ResultSet</code> Object provides a simple API to create a uniform data structure that the default results view template can consume.</p>
 
 <p>More importantly, a method is included to <code>send()</code> your result set to the rendering engine once you have finished populating it.</p>
+
+<p><a name="properties-1"></a></p>
 
 <h2>Properties</h2>
 
@@ -553,6 +591,8 @@
 <h3><code>score</code></h3>
 
 <p><em>int</em> - A subjective measure of how accurate your results are, on a scale of 1-5</p>
+
+<p><a name="methods-1"></a></p>
 
 <h2>Methods</h2>
 
@@ -598,9 +638,13 @@
 
 <p><strong>Description</strong> - Passes your <code>ResultSet</code> instance to the rendering engine, signaling it that your processing is complete and it is safe to send data to the client.</p>
 
+<p><a name="making-requests-to-a-search-index"></a></p>
+
 <h1>Making Requests to a Search Index</h1>
 
 <p>Within your search module (<code>customizations/search.js</code>), you will need to query a search index for VIVO profiles relevant to the text you received from the client. A request module is available for you in <code>lib/request.js</code> that makes this process easier.</p>
+
+<p><a name="the-request-module"></a></p>
 
 <h1>The Request Module</h1>
 
@@ -652,13 +696,17 @@
 <span class="p">});</span>
 </pre></div>
 
+<p><a name="creating-a-custom-view-template"></a></p>
+
 <h1>Creating a Custom View Template</h1>
 
 <p>Using custom view templates for a bookmarklet iframe, widget or result set is easy. Simply follow the naming conventions you see inside <code>customizations/views/</code>. For example - if you would like to use a custom iframe template, replace <code>bar-iframe.html.example</code> with your own template, <code>bar-iframe.html</code>. </p>
 
 <p>The searchlight framework checks first to see if a custom view template exists, and uses it if it is available. Otherwise, the default view template is used to satisfy a request. </p>
 
-<h1>Public Assets (stylesheets, javascript, images)</h1>
+<p><a name="public-assets-stylesheets-javascript-images"></a></p>
+
+<h1>Public Assets</h1>
 
 <p>Two publicly available static directories exist in every searchlight application. The first, is the default <code>/public</code> directory, which stores image, javascript and style assets for the default view templates.</p>
 
@@ -669,11 +717,15 @@
 <div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"/custom/stylesheets/style.css'"</span> <span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
 </pre></div>
 
+<p><a name="custom-client-side-behavior"></a></p>
+
 <h1>Custom Client Side Behavior</h1>
 
 <p>Currently, there are very few avenues for modifying application specific client side behavior without getting in and hacking framework code in <code>lib/client/</code>. If you need to add analytics code, or some other JavaScript for your use case, you can add it in <code>customizations/public/javascripts/custom.js</code>. </p>
 
 <p>This file will be appended to the rest of the client side JavaScript and minified during the <a href="#building-the-front-end">front end build process</a>.</p>
+
+<p><a name="building-the-front-end"></a></p>
 
 <h1>Building the Front End</h1>
 
@@ -689,7 +741,11 @@
 
 <p>The Gruntfile is located in the root of the project directory, <code>Gruntfile.js</code>.</p>
 
+<p><a name="error-handling"></a></p>
+
 <h1>Error Handling</h1>
+
+<p><a name="handling-an-error"></a></p>
 
 <h3>Handling an error</h3>
 
@@ -710,6 +766,8 @@
 <span class="p">}();</span>
 
 </pre></div>
+
+<p><a name="error-logging"></a></p>
 
 <h3>Error Logging</h3>
 
