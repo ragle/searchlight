@@ -6,11 +6,11 @@ A framework for creating simple applications that find VIVO researcher profiles 
 *  Add links to readme.md once DNS is resolving to documentation / about gh-pages...
 
 
-###Demo
+##Demo
 To learn more about VIVO Searchlight apps and try out an application created with The Searchlight Framework, check out our about page. 
 
 
-###Installation 
+##Installation 
 
 *  [Install node.js version 0.8.12](https://github.com/joyent/node/wiki/Installation#building-on-gnulinux-and-other-unix)
 *  ```$ git clone http://git.github.com/ragle/searchlight```
