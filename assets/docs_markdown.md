@@ -4,7 +4,7 @@
   *  [Creating a Searchlight Bookmarklet](#creating-a-bookmarklet)
   *  [Creating a Searchlight Widget](#creating-a-widget)
   *  [Writing a Search Module](#writing-a-search-module)
-  *  [Querying a Search Index](#querying-a-search-index)
+  *  [Querying a search index](#querying-a-search-index)
   *  [Populating the ResultSet](#populating-the-result-set)
   *  [Finishing Up](#finishing-up)
 *  [Dependencies](#dependencies)
@@ -19,7 +19,7 @@
   *  [ResultSet](#resultset)
      *  [Properties](#properties-1)
      *  [Methods](#methods-1)
-*  [Making Requests to a Search Index](#making-requests-to-a-search-index)
+*  [Making Requests to a search index](#making-requests-to-a-search-index)
   *  [The Request Module](#the-request-module)
 *  [Creating a custom view template](#creating-a-custom-view-template)
 *  [Public Assets (stylesheets, javascript, images)](#public-assets-stylesheets-javascript-images)
@@ -54,7 +54,7 @@ For Mac or Windows specific dev environments, please see the [node](http://nodej
 <a name="creating-a-bookmarklet"></a>
 ###Creating a Bookmarklet
 
-Below is the world's simplest HTML document. You'll probably want to create a better landing page than this ([see our demo](http://about.vivosearchlight.org)), but for testing, this is fine. 
+Below is the world's simplest HTML document. You'll probably want to create a better landing page than this ([see our demo](http://about.vivosearchlight.org)), but for testing, this works. 
 
 Simply create an HTML document using the code below, navigate to the document in your browser, and drag the link you see up to your browser's bookmark bar. 
 
@@ -68,6 +68,9 @@ Simply create an HTML document using the code below, navigate to the document in
   </body>
 </html>
 ```
+Bookmarklet view templates exist already for you for both the application UI and the result sets (VIVO profiles). These can be found in ```views/bar-iframe.html``` and ```results-iframe.html``` respectively.
+
+The default views are automatically managed for you - but if you want to customize them check out the section on [creating custom views](#creating-a-custom-view-template). 
 
 ---
 <a name="creating-a-widget"></a>
@@ -91,6 +94,9 @@ Below is a very simple example of an HTML document with an embedded searchlight 
   </body>
 </html>
 ```
+Widget view templates exist already for you for both the application UI and the result sets (VIVO profiles). These can be found in ```views/bar-widget.html``` and ```results-widget.html``` respectively.
+
+The default views are automatically managed for you - but if you want to customize them check out the section on [creating custom views](#creating-a-custom-view-template). 
 
 ---
 <a name="writing-a-search-module"></a>
@@ -111,9 +117,9 @@ var bond = require('bond'),
 //Called by Framework - your code goes here
 exports.execute = function(SearchableDocument, ResultSet, next){
 
-  gettingSearchableDocument = SearchableDocument.init(true);
+  creatingSearchableDocument = SearchableDocument.init(true);
 
-  gettingSearchableDocument.then(function(){
+  creatingSearchableDocument.then(function(){
 
     //  inspect the main content of the document the client sent you
     console.log(SearchableDocument.queryText);
@@ -126,17 +132,51 @@ exports.execute = function(SearchableDocument, ResultSet, next){
 };
 ```
 
-Let's look at the ```execute()``` function line-by-line to see what's happening. 
+Let's look at the ```execute()``` function in detail to see what's happening. 
 
 ```javascript
-gettingSearchableDocument = SearchableDocument.init(true);
+creatingSearchableDocument = SearchableDocument.init(true);
 ```
 
-Here, we are using the [SearchableDocument](#searchabledocument) object's [init()](#searchabledocumentinitreadabilityparse) function to extract main content from the page the client sent us. The ```init ()``` function returns a promise. For our purposes, think of a promise as a function that will execute as soon as something else finishes. It's "promising" to do something later, when something else is done. In this case, that "something else" is the [readabilityParse()](#searchabledocumentreadabilityparse) function (which can take a bit of time on a larger document).
+Here, we are using the [SearchableDocument](#searchabledocument) object's [init()](#searchabledocumentinitreadabilityparse) function to populate some [properties of the SearchableDocument object](#properties) that we will use later to query a search index. 
 
-Once readability is done extracting main content, we can do something with our searchable document (as *promised*) in the next block of code: 
+Because we pass ```true``` as a parameter to this function, it will also attempt to extract the main content from the page the client sent us using [node-readability](https://github.com/arrix/node-readability).
+
+The ```init ()``` function returns a promise. If you're not familiar with promises, they are exactly what they sound like. A promise, in our case to do something once something else finishes. For us, that "something else" is the [readabilityParse()](#searchabledocumentreadabilityparse) function (which can take a bit of time on a larger document).
+
+Once readability is done extracting main content, we can do something with our SearchableDocument (as *promised*) in the next block of code: 
 
 ```javascript
+creatingSearchableDocument.then(function(){
+
+  // inspect the main content of the document the client sent you
+  console.log(SearchableDocument.queryText);
+
+  // Send an empty result set to the client
+  ResultSet.send();
+
+});  
+
+```
+
+Let's look at this a little more abstractly. Forget about what is happening inside the anonymous function we pass to ```then()```.
+
+Let's look at it like this:
+
+```javascript
+creatingSearchableDocument.then(
+
+   //  After "creating the SearchableDocument" is finished, 
+   // **THEN** we can do whatever is in here... 
+
+)
+```
+
+There is [a lot more to know about promises](http://wiki.commonjs.org/wiki/Promises) if you are interested in wrangling asynchronous operations and callbacks into something sensible - but for the searchlight framework, this is all you really need to know. 
+
+ When our promise is resolved (i.e. that "something else" is finished), ```then()``` is called, and the code we passed it in the anonymous function is executed:
+
+ ```javascript
 gettingSearchableDocument.then(function(){
 
   // inspect the main content of the document the client sent you
@@ -149,13 +189,9 @@ gettingSearchableDocument.then(function(){
 
 ```
 
-Remember how I said that promises are functions? That's not entirely true. The thing we want from the promise we got back from ```init()``` *is* a function though. Specifically, we want the promise objects' ```then``` function, which is the one that executes once that "something else" (readability) is finished. There is a lot more going on here - but it isn't important for our simple example! :) 
+ Since ```SearchableDocument.init()``` has finished, our instance of SearchableDocument now has a [queryText](#querytext) property available for us. This is the string we will be sending to our search index (e.g. Solr / ElasticSearch, etc) to try to find some relevant VIVO results for the user. 
 
-So, we pass an anonymous function to ```then```, which will be executed when ```then``` is called. Confused yet? Don't be. All this means is that the code you see within the brackets () after ```then``` will be exectued when ```then``` is called (when our promise is resolved - after readability finishes its work). 
-
-The SearchableDocument now has a [queryText](#querytext) property available for us. This is the string we will be sending to our search index (e.g. Solr / ElasticSearch, etc) to try to find some relevant VIVO results for the user. 
-
-We then see what's inside ```queryText``` by logging it to the console: 
+We can see what's inside ```queryText``` by logging it to the console: 
 
 ```javascript
 console.log(SearchableDocument.queryText);
@@ -167,23 +203,26 @@ For now, we don't have any results for the user, so let's just send an empty res
 ResultSet.send();
 ```
 
-Now start up the server: 
+Now that you understand what is happening here - open up your terminal and start up the server: 
 ```bash
+$ cd /path/to/searchlight
 $ node app.js
 ```
 
-If you've already [installed the bookmarklet](#creating-the-bookmarklet), you can run it on a page of your choice! Congratulations, you've just processed your first searchlight request, start to finish!
+If you've already [installed the bookmarklet](#creating-the-bookmarklet), you can run it on a page of your choice!
+
+Congratulations, you've just processed your first searchlight request, start to finish!
 
 ---
 <a name="querying-a-search-index"></a>
 ###Querying a Search Index
 Now that we're successfully processing requests to our app, let's try to find some VIVO profiles relevant to the text the client sent us. 
 
-Installing and configuring a Search Index falls outside the scope of both the searchlight application and this quick start guide. If you haven't already set up a search index for your VIVO database, you might try [Solr](http://lucene.apache.org/solr/) or [ElasticSearch](http://www.elasticsearch.org/). We've successfully deployed searchlight apps using both, although ElasticSearch has performed better in our experience. 
+Installing and configuring a search index falls outside the scope of both the searchlight application and this quick start guide. If you haven't already set up a search index for your VIVO database, you might try [Solr](http://lucene.apache.org/solr/) or [ElasticSearch](http://www.elasticsearch.org/). We've successfully deployed searchlight apps using both, although ElasticSearch has performed better in our experience. 
 
 Let's assume you have a Solr search index listening for requests at the url: ```http://www.example.com/Solr/Select/```. 
 
-Let's create a separate function to query it for profiles relevant to our ```queryText```.  
+Let's create a separate function to query it for profiles relevant to the text contained in our ```SearchableDocument.queryText``` property.  
 
 ```javascript
 var getVivoProfiles = function(SearchableDocument, ResultSet, Next){
@@ -212,7 +251,7 @@ We first specify the URL we are making a request to, and some [params Solr will 
 
 We then call the [request module](#the-request-module)'s [post()](#posturi-opts-next) function, which returns a promise to deliver the response as soon as it has arrived. 
 
-Once the response arrives from the search index, our promise is resolved, and ```gettingResults.then``` executes the anonymous function we provided it.
+Once the response arrives from the search index, our promise is resolved, and ```gettingResults.then``` executes the anonymous function we provided it. Note that the promise delivers the response data as a parameter (```results```) to our annonymous function. 
 
 You'll need to call the function we just created (```getVivoProfiles```) from within ```execute()```. 
 
@@ -242,18 +281,18 @@ ResultSet.send()
 
 ```
 
-Here we are iterating through the solrResults, and adding results using the [ResultSet](#resultset) object's [addResult()](#resultsetaddresultparams) method.
+Here we are iterating through ```solrResults```, and adding results using the [ResultSet](#resultset) object's [addResult()](#resultsetaddresultparams) method.
 
 Once we're done, we call [ResultSet.send()](#resultsetsend), and our view engine renders the result set for the client.
 
-Of course, this is a very simplistic example. Depending on how complex the data structure you get back from your search index is - you may have to do additional data marshaling or processing. You'll probably want to move functionality relevant to the ResultSet over to it's own function, and do all sorts of other cool stuff as well. 
+Of course, this is a very simplistic example. Depending on how complex the data structure you get back from your search index is - you may have to do additional data marshaling or processing. You'll probably want to move functionality relevant to the ResultSet over to its own function, and do all sorts of other cool stuff as well. 
 
 ---
 <a name="finishing-up"></a>
 ###Finishing Up
 Assuming you've installed the bookmarklet and have properly set up your search index - you should be seeing results in the client side app! 
 
-We've glazed over some of the details here, of course. Unfortunately, we can't provide a completely ready made solution, because search index configurations, parameters and responses will vary wildly.  
+We've glazed over some of the details here, of course. Unfortunately, we can't provide a completely ready-made solution because search index configurations, parameters and responses will vary wildly.  
 
 Feel free to log an issue and make a pull request if you find any errors!
 
@@ -264,15 +303,15 @@ Feel free to log an issue and make a pull request if you find any errors!
 
 The client side dependencies are met for you within the ```/public/javascripts/``` directory. Currently, they include:
 *  [jQuery](http://api.jquery.com/) - for DOM manipulation, UI functionality & AJAX functionality
-*  [Porthole](http://ternarylabs.github.com/porthole/) - To provide a proxy for cross domain requests to the node-vivo-searchlight server
+*  [Porthole](http://ternarylabs.github.com/porthole/) - To provide a proxy for cross domain requests to the searchlight server
 
 
 <a name="server"></a>
-###Server Side Dependencies
+###server-side Dependencies
 
 All of these dependencies can be satisfied automatically by running ```npm install``` after cloning into the searchlight repo. (See the [quick start tutorial](#quick-start-tutorial) on [setting up a dev environment](#setting-up-a-development-environment-linux) for more details). 
 
-A number of fantastic 3rd party node.js packages / libraries were used in the development of node-vivo-searchlight. In general, the use of these libraries is abstracted for you and you will not need to use them in your code - with the exception of a search index client, sanitizr and perhaps bond if you like to handle asynchronous operations with promises. 
+A number of fantastic 3rd party node.js packages / libraries were used in the development of searchlight. In general, the use of these libraries is abstracted for you and you will not need to use them in your code - with the exception of a search index client, sanitizr and perhaps bond if you like to handle asynchronous operations with promises. 
 
 *  [express](https://github.com/visionmedia/express) - As a router and web application framework
 *  [EJS](https://github.com/visionmedia/ejs) - As a view templating engine
@@ -288,38 +327,38 @@ A number of fantastic 3rd party node.js packages / libraries were used in the de
 <a name="directory-structure"></a>
 #Directory Structure
 
-You should really only ever be modifying code in the ```/customizations/``` directory, unless you need to do some framework hacking for your use case.
+You should really only ever be modifying code in the ```customizations/``` directory, unless you need to do some framework hacking for your use case.
 
 
 ```
 ├── customizations                //  Your custom search code goes here
 |   |
-│   ├── public                        //  extend client side styles and behavior
-│   ├── SearchableDocument.js         //  Extends /lib/SearchableDocument.js
-│   ├── search.js                     //  Your custom search module
-│   └── views                         //  Overide EJS templates in /views
+│   ├── public                        //  extend client side styles and behavior
+│   ├── SearchableDocument.js         //  Extends /lib/SearchableDocument.js
+│   ├── search.js                     //  Your custom search module
+│   └── views                         //  Override EJS templates in /views
 |
 |
 ├── lib                           //  Framework Library
 |   |
-│   ├── Client                        //  Directory containing Client Side Application code
-│   ├── ErrorHandler.js               //  Custom error handling middleware for express
-│   ├── request.js                    //  Provides simplified HTTP requests
-│   ├── ResultSet.js                  //  Provides standardized data structure for default view  
-│   ├── SearchableDocument.js         //  Simple API for server side DOM access
-│   ├── build.js                      //  Application build logic
+│   ├── Client                        //  Directory containing Client Side Application code
+│   ├── ErrorHandler.js               //  Custom error handling middleware for express
+│   ├── request.js                    //  Provides simplified HTTP requests
+│   ├── ResultSet.js                  //  Provides standardized data structure for default view  
+│   ├── SearchableDocument.js         //  Simple API for server-side DOM access
+│   ├── build.js                      //  Application build logic
 │
 ├── logs
-│   └── error.log.json                //  Winston error log
+│   └── error.log.json                //  Winston error log
 |
 ├── node_modules                      //  3rd party NPM modules
 |
 ├── public                         // Static assets
-│   ├── images
-│   ├── javascripts
-|   |   └── bar_iframe.js             //  iFrame animations, proxies DOM to server
-|   |   └── loader.js                 //  loads iFrame, proxies DOM to iFrame, on-page animation
-│   └── stylesheets
+│   ├── images
+│   ├── javascripts
+|   |   └── bar_iframe.js             //  iframe animations, proxies DOM to server
+|   |   └── loader.js                 //  loads iframe, proxies DOM to iFrame, on-page animation
+│   └── stylesheets
 |       └── bar.css                   //  Styles for default view template
 |
 └── views                         //  EJS View Templates
@@ -340,14 +379,14 @@ You should really only ever be modifying code in the ```/customizations/``` dire
 
 <a name="searchabledocument"></a>
 ##SearchableDocument
-Server side DOM wrapper for search request sent from the client. Enables extraction of main content and removal of HTML, JavaScript and CSS.
+server-side DOM wrapper for search request sent from the client. Enables extraction of main content and removal of HTML, JavaScript and CSS.
 
 [The SearchableDocument object can be easily extended](#extending-the-searchabledocument-object) with methods specific to your use case. Note that manipulating parent SearchableDocument properties prepended by '_' via non-parent methods may have unintended consequences.
 
 <a name="properties"></a>
 ###Properties
 ###```wordCount```
-*int* Contains a word count. Set by ```SearchableDocument.setWordCount()```
+*int* - Contains a word count. Set by ```SearchableDocument.setWordCount()```
 
 <a name="querytext"></a>
 ###```queryText```
@@ -368,7 +407,7 @@ Server side DOM wrapper for search request sent from the client. Enables extract
 
 ###```_$```
 
-*Object* - Contains a server side jQuery object. Can be used in your DOM manipulation methods if you extend the Searchable Document object for your own use case. 
+*Object* - Contains a server-side jQuery object. Can be used in your DOM manipulation methods if you [extend the SearchableDocument object](#extending-the-searchabledocument-object) for your own use case. 
 
 <a name="methods"></a>
 ###Methods
@@ -376,13 +415,13 @@ Server side DOM wrapper for search request sent from the client. Enables extract
 ###```SearchableDocument.init(readabilityParse)```
 
 **Params**
-  *  ```readabilityParse``` - **boolean** - set to True if you want node-readability to attempt to extract main content from the DOM.
+  *  ```readabilityParse``` - *boolean* - set to True if you want node-readability to attempt to extract main content from the DOM.
 
-**Description** - Extract main content with readability if ```readabilityParse``` is set to true and set the ```MCHTML``` and ```MCText``` properties. If ```MCText``` is defined, set the ```queryText``` property to MCText. Otherwise, set ```queryText``` to the DOM, stripped of all JavaScript and HTML.
+**Description** - Extract main content with readability if ```readabilityParse``` is set to true and set the ```_MCHTML``` and ```MCText``` properties.
 
 **Returns** - void
 
-**Post Condition** - ```SearchableDocument.queryText``` is available to be sent to a Search Index of your choice
+**Post Condition** - ```SearchableDocument.queryText``` is available to be sent to a search index of your choice
 
 <a name="searchabledocumentreadabilityparse"></a>
 ---
@@ -396,7 +435,7 @@ Note that using readability almost *always* improves search results in our exper
 
 **Returns** - void
 
-**Post Condition** - ```SearchableDocument.MCHTML``` is populated with the document's main content as HTML
+**Post Condition** - ```SearchableDocument._MCHTML``` is populated with the document's main content as HTML
 
 ---
 
@@ -406,11 +445,11 @@ Note that using readability almost *always* improves search results in our exper
 
 **Description** - sets the ```_MCText``` property to the contents of ```_MCHTML```, stripped of HTML
 
-**Returns** - true on success, false on failure (i.e. ```SearchableDocument.MCHTML``` has not yet been set)
+**Returns** - true on success, false on failure (i.e. ```SearchableDocument._MCHTML``` has not yet been set)
 
-**Pre-Condition** - ```SearchableDocument.MCHTML``` is populated with the document's main content as HTML
+**Pre-Condition** - ```SearchableDocument._MCHTML``` is populated with the document's main content as HTML
 
-**Post Condition** - ```SearchableDocument.MCHTML``` is populated with the document's main content as Text
+**Post Condition** - ```SearchableDocument._MCText``` is populated with the document's main content as Text
 
 ---
 
@@ -420,7 +459,7 @@ Note that using readability almost *always* improves search results in our exper
 
 *  ```html``` - **string** - A string containing valid HTML 
 
-**Description** - Attempts to Strip html from a string, returnins a plain text version on success, the original HTML on failure
+**Description** - Attempts to strip html from a string, returns a plain text version on success, the original HTML on failure
 
 **Returns** - String
 
@@ -432,7 +471,7 @@ Note that using readability almost *always* improves search results in our exper
 
 *  ```html``` - **string** - A string containing valid HTML 
 
-**Description** - Attempts to Strip embedded JavaScript from a string of valid HTML. Returns the HTML stripped of embedded JavaScript on success, the original HTML on failure. 
+**Description** - Attempts to strip embedded JavaScript from a string of valid HTML. Returns the HTML stripped of embedded JavaScript on success, the original HTML on failure. 
 
 **Returns** - String
 
@@ -444,7 +483,7 @@ Note that using readability almost *always* improves search results in our exper
 
 *  ```text``` - **string**
 
-**Description** - Attempts to whether or not a string contains HTML
+**Description** - Attempts to determine whether or not a string contains HTML
 
 **Returns** - boolean
 
@@ -454,7 +493,11 @@ Note that using readability almost *always* improves search results in our exper
 
 **Params**: none
 
-**Description** - Performs a wordcount on the document, and sets the ```wordCount``` property to the result. 
+**Description** - Performs a word count on the document, and sets the ```wordCount``` property to the result. 
+
+**Returns** - void 
+
+**Post Condition** - ```SearchableDocument.wordCount``` property is set. 
 
 Note that it will check ```queryText``` first, but if it doesn't find anything, it will back track through ```_MCText``` and ```_DOM```, so you can call this function immediately within your search module (before ```init()```), if for example you wanted to write some heuristics to deal with documents of different sizes. 
 
@@ -539,6 +582,10 @@ If you have defined a custom view template, pass in what you need instead. For e
 
 **Description** - sets ```ResultSet.score``` to ```score```. Because scoring is highly subjective, you will need to write some logic to decide how accurate the results you are getting back from your search index are on a scale of 1-5. This score is displayed to the user in the default view template. If you are using a custom view template, setting a score isn't strictly necessary. 
 
+**Returns** - Void
+
+**Post Condition** - ```ResultSet.score``` is set to ```score```.
+
 ---
 
 <a name="resultsetsend"></a>
@@ -549,7 +596,7 @@ If you have defined a custom view template, pass in what you need instead. For e
 **Description** - Passes your ```ResultSet``` instance to the rendering engine, signaling it that your processing is complete and it is safe to send data to the client.
 
 <a name="making-requests-to-a-search-index"></a>
-#Making Requests to a Search Index
+#Making Requests to a search index
 Within your search module (```customizations/search.js```), you will need to query a search index for VIVO profiles relevant to the text you received from the client. A request module is available for you in ```lib/request.js``` that makes this process easier.
 
 <a name="the-request-module"></a>
@@ -575,7 +622,6 @@ The request module is available to you as ```request``` within your search modul
 **Example usage** 
 
 ```javaScript
-var request = include(global.app_path + 'lib/result.js');
 var gettingResults = request.post('www.example.com', {id:2}, next);
 gettingResults.then(function(results){
     //do something with your results... 
@@ -597,12 +643,12 @@ gettingResults.then(function(results){
 **Example usage** 
 
 ```javaScript
-var request = include(global.app_path + 'lib/result.js');
 var gettingResults = request.get('www.example.com', {id:2}, next);
 gettingResults.then(function(results){
     //do something with your results... 
 });
 ```
+
 <a name="creating-a-custom-view-template"></a>
 #Creating a Custom View Template
 Using custom view templates for a bookmarklet iframe, widget or result set is easy. Simply follow the naming conventions you see inside ```customizations/views/```. For example - if you would like to use a custom iframe template, replace ```bar-iframe.html.example``` with your own template, ```bar-iframe.html```. 
@@ -668,8 +714,8 @@ function raiseShields(){
 ```
 <a name="error-logging"></a>
 ###Error Logging
-```lib/ErrorHandler.js``` contains a thin wrapper for [Winston](https://github.com/flatiron/winston). It is used internally as middleware for express. Both console and filesystem transports are used for logging, with errors logged in ```/logs/error.log.json```. See the Winston documentation for details about querying the log file programatically - which can be quite useful for testing and debugging. 
+```lib/ErrorHandler.js``` contains a thin wrapper for [Winston](https://github.com/flatiron/winston). It is used internally as middleware for express. Both console and file system transports are used for logging, with errors logged in ```/logs/error.log.json```. See the Winston documentation for details about querying the log file programmaticly - which can be quite useful for testing and debugging. 
 
-Caught exceptions are logged as runtime errors. Uncaught exceptions are logged as such, and the app is killed to prevent attempts to handle future requests in an unknown state. 
+Caught exceptions are logged as run time errors. Uncaught exceptions are logged as such, and the app is killed to prevent attempts to handle future requests in an unknown state. 
 
 For maximum stability, it is recommended that you use a service like [forever](https://github.com/nodejitsu/forever) to automatically restart the server in the event of an uncaught exception.
