@@ -479,7 +479,7 @@
 
 <h3><code>wordCount</code></h3>
 
-<p><em>int</em> Contains a word count. Set by <code>SearchableDocument.setWordCount()</code></p>
+<p><em>int</em> - Contains a word count. Set by <code>SearchableDocument.setWordCount()</code></p>
 
 <p><a name="querytext"></a></p>
 
@@ -514,7 +514,7 @@
 <p><strong>Params</strong></p>
 
 <ul>
-<li> <code>readabilityParse</code> - <strong>boolean</strong> - set to True if you want node-readability to attempt to extract main content from the DOM.</li>
+<li> <code>readabilityParse</code> - <em>boolean</em> - set to True if you want node-readability to attempt to extract main content from the DOM.</li>
 </ul><p><strong>Description</strong> - Extract main content with readability if <code>readabilityParse</code> is set to true and set the <code>_MCHTML</code> and <code>MCText</code> properties.</p>
 
 <p><strong>Returns</strong> - void</p>
@@ -563,7 +563,7 @@
 
 <ul>
 <li> <code>html</code> - <strong>string</strong> - A string containing valid HTML </li>
-</ul><p><strong>Description</strong> - Attempts to Strip embedded JavaScript from a string of valid HTML. Returns the HTML stripped of embedded JavaScript on success, the original HTML on failure. </p>
+</ul><p><strong>Description</strong> - Attempts to strip embedded JavaScript from a string of valid HTML. Returns the HTML stripped of embedded JavaScript on success, the original HTML on failure. </p>
 
 <p><strong>Returns</strong> - String</p>
 
@@ -583,6 +583,10 @@
 <p><strong>Params</strong>: none</p>
 
 <p><strong>Description</strong> - Performs a word count on the document, and sets the <code>wordCount</code> property to the result. </p>
+
+<p><strong>Returns</strong> - void </p>
+
+<p><strong>Post Condition</strong> - <code>SearchableDocument.wordCount</code> property is set. </p>
 
 <p>Note that it will check <code>queryText</code> first, but if it doesn't find anything, it will back track through <code>_MCText</code> and <code>_DOM</code>, so you can call this function immediately within your search module (before <code>init()</code>), if for example you wanted to write some heuristics to deal with documents of different sizes. </p>
 
@@ -680,6 +684,10 @@
 <ul>
 <li> Score - <em>int</em> - a number between 1-5 that describes how accurate your result set is.</li>
 </ul><p><strong>Description</strong> - sets <code>ResultSet.score</code> to <code>score</code>. Because scoring is highly subjective, you will need to write some logic to decide how accurate the results you are getting back from your search index are on a scale of 1-5. This score is displayed to the user in the default view template. If you are using a custom view template, setting a score isn't strictly necessary. </p>
+
+<p><strong>Returns</strong> - Void</p>
+
+<p><strong>Post Condition</strong> - <code>ResultSet.score</code> is set to <code>score</code>.</p>
 
 <hr><p><a name="resultsetsend"></a></p>
 
