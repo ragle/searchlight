@@ -32,7 +32,7 @@
 
 <a name="introduction"></a>
 #Introduction
-Searchlight is a simple application development framework that allows any organization with a VIVO database to quickly and easily deploy a VIVO searchlight application of their own.
+[Searchlight](https://www.github.com/ragle/searchlight) is a simple application development framework that allows any organization with a VIVO database to quickly and easily deploy a VIVO searchlight application of their own.
 
 To learn more about VIVO searchlight apps and see a demo, check out our [about page](http://about.vivosearchlight.org).
 
