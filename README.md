@@ -2,9 +2,6 @@ searchlight
 ===========
 A framework for creating simple applications that find [VIVO profiles](http://www.vivoweb.org) relevant to content in the user's browser. 
 
-##TO DO
-*  Add links to readme.md once DNS is resolving to documentation / about gh-pages...
-
 
 ##Demo
 To learn more about VIVO Searchlight apps and try out an application created with The Searchlight Framework, check out our about page. 
@@ -20,7 +17,7 @@ To learn more about VIVO Searchlight apps and try out an application created wit
 
 ##Quick Start
 
-For more detailed help getting started, check out our [quick start tutorial](http://ragle.github.io/searchlight/#quick-start-tutorial). 
+For more detailed help getting started, check out our [quick start tutorial](http://docs.vivosearchlight.org/#quick-start-tutorial). 
 
 Create a very simple bookmarklet to host the client side app:
 
@@ -48,10 +45,10 @@ You should see "No matching VIVO profiles were found" in the app UI (you haven't
 
 Congrats, you've just processed your first VIVO searchlight request, from start to finish.
 
-Have a look at the [documentation](http://ragle.github.io/searchlight/) for more details about building VIVO searchlight apps. 
+Have a look at the [documentation](http://docs.vivosearchlight.org) for more details about building VIVO searchlight apps. 
 
 ##Documentation
-There is detailed documentation available here: [Documentation](http://ragle.github.io/searchlight/). Please submit a pull request on the gh-pages branch of this repository if you find any documentation errors. The Markdown version of the docs can be found [here](https://github.com/ragle/searchlight/blob/gh-pages/assets/docs_markdown.md). 
+There is detailed documentation [available here](http://docs.vivosearchlight.org). Please submit a pull request on the gh-pages branch of this repository if you find any documentation errors. The Markdown version of the docs can be found [here](https://github.com/ragle/searchlight/blob/gh-pages/assets/docs_markdown.md). 
 
 ##Issues, Problems and Bugs
 If you find a bug, please log an issue and submit a patch. If you run into a problem you can't solve, have questions, or are interested in having a searchlight app built for your organization - please don't hesitate to get in touch!
