@@ -4,7 +4,7 @@ A framework for creating simple applications that find [VIVO profiles](http://ww
 
 
 ##Demo
-To learn more about VIVO Searchlight apps and try out an application created with The Searchlight Framework, check out our about page. 
+To learn more about VIVO Searchlight apps and try out an application created with The Searchlight Framework, check out our [about page](http://about.vivosearchlight.org). 
 
 
 ##Installation 
