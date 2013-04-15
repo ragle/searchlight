@@ -705,7 +705,7 @@ function raiseShields(){
   sheildStatus = enterprise.shields.up(); // Some code an intern wrote that lowers
                                           // shields and spits out an error instead...
   if(shieldStatus.error){
-    enterprise.bones.complain("My god Jim...It'll tear the ship apart!");
+    enterprise.bones.complain("My god Jim... It'll tear the ship apart!");
     next(shieldStatus.error);
   }
 
