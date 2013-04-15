@@ -1,6 +1,6 @@
 searchlight
 ===========
-A framework for creating simple applications that find VIVO researcher profiles relevant to the web page you are viewing.
+A framework for creating simple applications that find [VIVO profiles](http://www.vivoweb.org) relevant to content in the user's browser. 
 
 ##TO DO
 *  Add links to readme.md once DNS is resolving to documentation / about gh-pages...
@@ -56,4 +56,4 @@ There is detailed documentation available here: [Documentation](http://ragle.git
 ##Issues, Problems and Bugs
 If you find a bug, please log an issue and submit a patch. If you run into a problem you can't solve, have questions, or are interested in having a searchlight app built for your organization - please don't hesitate to get in touch!
 
-The Searchlight Framework is currently a prototype in the earliest stages of development. It has been used to deploy [a simple demo](http://about.vivosearchlight.org), and a [proof-of-concept app for the Agrivivo Project](http://agrivivo.net/tool/searchlight). Your milage may vary using it to create production apps.
+The Searchlight Framework is currently a prototype in the earliest stages of development. It has been used to deploy [a simple demo](http://about.vivosearchlight.org), and a [proof-of-concept app for the Agrivivo Project](http://agrivivo.net/tool/searchlight). Your mileage may vary using it to create production apps.
