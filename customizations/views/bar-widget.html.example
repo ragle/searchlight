@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>
+			VIVO Searchlight
+		</title>
+		<link rel="stylesheet" href="/stylesheets/bar.css" type="text/css"> <!-- Default Stylesheet -->
+		<link rel="stylesheet" href="/custom/stylesheets/style.css'" type="text/css"> <!-- Your overides / additions -->
+		<script src="/javascripts/bar_iframe.min.js" type="text/javascript" ></script>
+	</head>
+	<body>
+		<div id="bar">
+			<a id="home" href="http://vivosearchlight.org" title="VIVO Searchlight" target="_blank"><span id="logo">VIVO</span></a>
+			<div id="close">
+				<a id="close-button" href="#" title="Hide this bar">Hide</a>
+			</div>
+			<div id="content"></div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<div id="results">
+	
+	<ul>
+
+	<% results.forEach(function(result){ %>
+		<li rel="profile-<%=result.css_id %>" class="result">
+			<span class="thumb"><img src="<%- result.image_url %>" width="30" class="image <%- result.image_class %>"></span>
+			<div class="info">
+				<span class="name"> <%= result.name %> </span>
+				<span class="institution"> <%= result.institution_shortname %> </span>
+			</div>
+		</li>
+	<% }) %>
+		
+	</ul>
+
+</div>
+
+<div id="score" title="Strength of results, indicates how well these VIVO profiles match the text.">
+
+	<% for(var i=1; i<=5; i++){ %>
+		<% if( i <= (5 - score)) {%>
+			<span class="off"></span>
+		<%} else{%>
+			<span class="on"></span>
+		<%}%>
+	<% } %>
+
+</div>
+
+<div id="profiles">
+	<ul>
+
+		<% results.forEach(function(result){ %>
+
+		<li id="profile-<%= result.css_id %>" class="profile">
+			<div class="basics">
+				<span class="thumb"><a href="<%= result.uri %>" target="_blank" title="Open VIVO profile"><img src="<%= result.image_url %>" height="100" class="image"></a></span>
+				<div class="info">
+					<p class="name">
+						<a href="<%= result.uri %>" target="_blank" title="Open VIVO profile"><%= result.name %> </a>
+					</p>
+					<p class="title"><%= result.title %> </p>
+					<p class="institution">
+						<%= result.institution_name %>
+					</p>
+				</div>
+			</div>
+			<div class="overview">
+				<div class="statement">
+					<% if(result.overview) {%>
+						<%= result.overview %>
+					<%}%>
+				</div>
+				<div class="links">
+					<a href="<%= result.uri %>" target="_blank" class="profile-link">Open VIVO profile</a>
+				</div>
+			</div>
+		</li>
+
+		<% }) %>
+
+	</ul>
+</div>
