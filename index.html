@@ -261,7 +261,7 @@
 <span class="p">)</span>
 </pre></div>
 
-<p>There is a lot more to know about promises if you are interested in wrangling asynchronous operations and callbacks into something sensible - but for the searchlight framework, this is all you really need to know. </p>
+<p>There is <a href="http://wiki.commonjs.org/wiki/Promises">a lot more to know about promises</a> if you are interested in wrangling asynchronous operations and callbacks into something sensible - but for the searchlight framework, this is all you really need to know. </p>
 
 <p>When our promise is resolved (i.e. that "something else" is finished), <code>then()</code> is called, and the code we passed it in the anonymous function is executed:</p>
 
@@ -366,11 +366,11 @@
 
 </pre></div>
 
-<p>Here we are iterating through the solrResults, and adding results using the <a href="#resultset">ResultSet</a> object's <a href="#resultsetaddresultparams">addResult()</a> method.</p>
+<p>Here we are iterating through <code>solrResults</code>, and adding results using the <a href="#resultset">ResultSet</a> object's <a href="#resultsetaddresultparams">addResult()</a> method.</p>
 
 <p>Once we're done, we call <a href="#resultsetsend">ResultSet.send()</a>, and our view engine renders the result set for the client.</p>
 
-<p>Of course, this is a very simplistic example. Depending on how complex the data structure you get back from your search index is - you may have to do additional data marshaling or processing. You'll probably want to move functionality relevant to the ResultSet over to it's own function, and do all sorts of other cool stuff as well. </p>
+<p>Of course, this is a very simplistic example. Depending on how complex the data structure you get back from your search index is - you may have to do additional data marshaling or processing. You'll probably want to move functionality relevant to the ResultSet over to its own function, and do all sorts of other cool stuff as well. </p>
 
 <hr><p><a name="finishing-up"></a></p>
 
@@ -378,7 +378,7 @@
 
 <p>Assuming you've installed the bookmarklet and have properly set up your search index - you should be seeing results in the client side app! </p>
 
-<p>We've glazed over some of the details here, of course. Unfortunately, we can't provide a completely ready made solution, because search index configurations, parameters and responses will vary wildly.  </p>
+<p>We've glazed over some of the details here, of course. Unfortunately, we can't provide a completely ready-made solution because search index configurations, parameters and responses will vary wildly.  </p>
 
 <p>Feel free to log an issue and make a pull request if you find any errors!</p>
 
@@ -394,14 +394,14 @@
 
 <ul>
 <li> <a href="http://api.jquery.com/">jQuery</a> - for DOM manipulation, UI functionality &amp; AJAX functionality</li>
-<li> <a href="http://ternarylabs.github.com/porthole/">Porthole</a> - To provide a proxy for cross domain requests to the node-vivo-searchlight server</li>
+<li> <a href="http://ternarylabs.github.com/porthole/">Porthole</a> - To provide a proxy for cross domain requests to the searchlight server</li>
 </ul><p><a name="server"></a></p>
 
 <h3>server-side Dependencies</h3>
 
 <p>All of these dependencies can be satisfied automatically by running <code>npm install</code> after cloning into the searchlight repo. (See the <a href="#quick-start-tutorial">quick start tutorial</a> on <a href="#setting-up-a-development-environment-linux">setting up a dev environment</a> for more details). </p>
 
-<p>A number of fantastic 3rd party node.js packages / libraries were used in the development of node-vivo-searchlight. In general, the use of these libraries is abstracted for you and you will not need to use them in your code - with the exception of a search index client, sanitizr and perhaps bond if you like to handle asynchronous operations with promises. </p>
+<p>A number of fantastic 3rd party node.js packages / libraries were used in the development of searchlight. In general, the use of these libraries is abstracted for you and you will not need to use them in your code - with the exception of a search index client, sanitizr and perhaps bond if you like to handle asynchronous operations with promises. </p>
 
 <ul>
 <li> <a href="https://github.com/visionmedia/express">express</a> - As a router and web application framework</li>
@@ -501,7 +501,7 @@
 
 <h3><code>_$</code></h3>
 
-<p><em>Object</em> - Contains a server-side jQuery object. Can be used in your DOM manipulation methods if you extend the Searchable Document object for your own use case. </p>
+<p><em>Object</em> - Contains a server-side jQuery object. Can be used in your DOM manipulation methods if you <a href="#extending-the-searchabledocument-object">extend the SearchableDocument object</a> for your own use case. </p>
 
 <p><a name="methods"></a></p>
 
@@ -574,7 +574,7 @@
 <ul>
 <li> <code>text</code> - <strong>string</strong>
 </li>
-</ul><p><strong>Description</strong> - Attempts to whether or not a string contains HTML</p>
+</ul><p><strong>Description</strong> - Attempts to determine whether or not a string contains HTML</p>
 
 <p><strong>Returns</strong> - boolean</p>
 
