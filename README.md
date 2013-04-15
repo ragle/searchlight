@@ -18,9 +18,12 @@ To learn more about VIVO Searchlight apps and try out an application created wit
 *  ```$ npm install```
 
 
-##(Very) Quick Start
+##Quick Start
 
-Create a very simple bookmarklet to host the client side app: 
+For more detailed help getting started, check out our [quick start tutorial](http://ragle.github.io/searchlight/#quick-start-tutorial). 
+
+Create a very simple bookmarklet to host the client side app:
+
 ```html
 <html>
   <head></head>
@@ -41,16 +44,16 @@ $ node app.js
 
 Navigate to the page of your choice (perhaps a news article about some research topic that interests you), and click on the bookmarklet. 
 
-You should see "No matching VIVO profiles were found" in the app UI (you haven't set up a search index yet). In your console (where you started the server), you should see the main content of the article you sent with the bookmarklet. 
+You should see "No matching VIVO profiles were found" in the app UI (you haven't set up a search index yet). In your console (where you started the server), you should see the main content of the article you sent. 
 
-Congrats, you've just processed your first VIVO searchlight request, from start to finish. 
+Congrats, you've just processed your first VIVO searchlight request, from start to finish.
 
-For a more detailed tutorial on getting searchlight working with your search index / VIVO database, check out our quick start tutorial and the documentation. 
+Have a look at the [documentation](http://ragle.github.io/searchlight/) for more details about building VIVO searchlight apps. 
 
 ##Documentation
-There is detailed documentation available here: [Documentation](http://ragle.github.io/searchlight/). Please submit a pull request on the gh-pages branch of this repository if you find any documentation errors. The Markdown version of the docs can be found here. 
+There is detailed documentation available here: [Documentation](http://ragle.github.io/searchlight/). Please submit a pull request on the gh-pages branch of this repository if you find any documentation errors. The Markdown version of the docs can be found [here](https://github.com/ragle/searchlight/blob/gh-pages/assets/docs_markdown.md). 
 
 ##Issues, Problems and Bugs
-If you find a bug, please log an issue and submit a patch. If you run into a problem you can't solve, or have questions - please don't hesitate to get in touch!
+If you find a bug, please log an issue and submit a patch. If you run into a problem you can't solve, have questions, or are interested in having a searchlight app built for your organization - please don't hesitate to get in touch!
 
-The Searchlight Framework is currently a proof-of-concept prototype in the earliest stages of development. It has been used to deploy VIVO searchlight apps successfuly for a demo, and for a proof-of-concept app for the Agrivivo Project. Your milage may vary using it to create production apps!
+The Searchlight Framework is currently a prototype in the earliest stages of development. It has been used to deploy [a simple demo](http://about.vivosearchlight.org), and a [proof-of-concept app for the Agrivivo Project](http://agrivivo.net/tool/searchlight). Your milage may vary using it to create production apps.
