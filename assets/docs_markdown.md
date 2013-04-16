@@ -237,7 +237,7 @@ Let's create a separate function to query it for profiles relevant to the text c
 ```javascript
 var getVivoProfiles = function(SearchableDocument, ResultSet, next){
 
-  var requestURI = "http://www.example.com:8080/Solr/Select/"
+  var requestURI = "http://www.example.com:8080/Solr/Select/";
 
   var solrParams = {
     "qt":"mlt",
