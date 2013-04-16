@@ -235,7 +235,7 @@ Let's assume you have a Solr search index listening for requests at the uri: ```
 Let's create a separate function to query it for profiles relevant to the text contained in our ```SearchableDocument.queryText``` property.  
 
 ```javascript
-var getVivoProfiles = function(SearchableDocument, ResultSet, Next){
+var getVivoProfiles = function(SearchableDocument, ResultSet, next){
 
   var requestURI = "http://www.example.com:8080/Solr/Select/"
 
@@ -248,12 +248,12 @@ var getVivoProfiles = function(SearchableDocument, ResultSet, Next){
   };
 
   var gettingResults = request.post(requestURI, solrParams, next);
-  
-  gettingResults.then(function(results)){
-    console.log(results.response.hits);
-  } ;
 
-}
+  gettingResults.then(function(results){
+    console.log(results.response.docs);
+  });
+
+};
 
 ```
 

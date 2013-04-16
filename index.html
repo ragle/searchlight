@@ -322,9 +322,9 @@
 
 <p>Let's create a separate function to query it for profiles relevant to the text contained in our <code>SearchableDocument.queryText</code> property.  </p>
 
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">getVivoProfiles</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">SearchableDocument</span><span class="p">,</span> <span class="nx">ResultSet</span><span class="p">,</span> <span class="nx">Next</span><span class="p">){</span>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">getVivoProfiles</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">SearchableDocument</span><span class="p">,</span> <span class="nx">ResultSet</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
 
-  <span class="kd">var</span> <span class="nx">requestURI</span> <span class="o">=</span> <span class="s2">"http://www.example.com:8080/Solr/Select/"</span>
+  <span class="kd">var</span> <span class="nx">requestURI</span> <span class="o">=</span> <span class="s2">"http://www.example.com:8080/Solr/Select/";</span>
 
   <span class="kd">var</span> <span class="nx">solrParams</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">"qt"</span><span class="o">:</span><span class="s2">"mlt"</span><span class="p">,</span>
@@ -336,9 +336,9 @@
 
   <span class="kd">var</span> <span class="nx">gettingResults</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">requestURI</span><span class="p">,</span> <span class="nx">solrParams</span><span class="p">,</span> <span class="nx">next</span><span class="p">);</span>
 
-  <span class="nx">gettingResults</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">)){</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">hits</span><span class="p">);</span>
-  <span class="p">}</span> <span class="p">;</span>
+  <span class="nx">gettingResults</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">docs</span><span class="p">);</span>
+  <span class="p">});</span> <span class="p">;</span>
 
 <span class="p">}</span>
 
