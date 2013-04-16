@@ -848,9 +848,9 @@
 
 <h1 class="topic-header">Deploying the App</h1>
 
-<p>For details about deploying a node app, check out the documentation here. </p>
+<p>There are lots of guides and tutorials for deploying node.js apps. How you deploy will depend a lot on your server environment / OS, so be sure to consult the appropriate documentation.</p>
 
-<p>Consider running a service like forever to restart the app in the event of uncaught exceptions. </p>
+<p>Consider running a service like <a href="https://github.com/nodejitsu/forever">forever</a> or <a href="http://mmonit.com/monit/">monit</a> to restart the app in the event of an <a href="#error-logging">uncaught exception</a>. </p>
 
 <p>Finally, make sure the client side of the app knows where to find resources. You can do this by editing the <code>SearchLight_Application_Host</code> variable in <code>customizations/public/javascripts/config.js</code>. The host is set to <code>http://127.0.0.1:3000</code> for local development by default.</p>
 

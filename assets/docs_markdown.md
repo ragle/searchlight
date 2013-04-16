@@ -729,9 +729,10 @@ For maximum stability, it is recommended that you use a service like [forever](h
 
 <a name="deployment"></a>
 #Deploying the App
-For details about deploying a node app, check out the documentation here. 
 
-Consider running a service like forever to restart the app in the event of uncaught exceptions. 
+There are lots of guides and tutorials for deploying node.js apps. How you deploy will depend a lot on your server environment / OS, so be sure to consult the appropriate documentation.
+
+Consider running a service like [forever](https://github.com/nodejitsu/forever) or [monit](http://mmonit.com/monit/) to restart the app in the event of an [uncaught exception](#error-logging).
 
 Finally, make sure the client side of the app knows where to find resources. You can do this by editing the ```SearchLight_Application_Host``` variable in ```customizations/public/javascripts/config.js```. The host is set to ```http://127.0.0.1:3000``` for local development by default.
 
