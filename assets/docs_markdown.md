@@ -730,7 +730,7 @@ For maximum stability, it is recommended that you use a service like [forever](h
 <a name="deployment"></a>
 #Deploying the App
 
-There are lots of guides and tutorials for deploying node.js apps. How you deploy will depend a lot on your server environment / OS, so be sure to consult the appropriate documentation.
+There are lots of guides and tutorials online for deploying node.js apps. How you should deploy will also depend a lot on your server environment / OS however, so be sure to consult the appropriate documentation.
 
 Consider running a service like [forever](https://github.com/nodejitsu/forever) or [monit](http://mmonit.com/monit/) to restart the app in the event of an [uncaught exception](#error-logging).
 
