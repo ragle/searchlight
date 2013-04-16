@@ -263,9 +263,23 @@ We then call the [request module](#the-request-module)'s [post()](#posturi-opts-
 
 Once the response arrives from the search index, our promise is resolved, and ```gettingResults.then``` executes the anonymous function we provided it. Note that the promise delivers the response data as a parameter (```results```) to our anonymous function. 
 
-You'll need to call the function we just created (```getVivoProfiles```) from within ```execute()```. 
+You'll need to call the function we just created (```getVivoProfiles```) from within ```execute()```:
 
-If all goes well, you should see a JSON object full of relevant VIVO profiles in your console!
+```javascript
+exports.execute = function(SearchableDocument, ResultSet, next){
+
+  creatingSearchableDocument = SearchableDocument.init(true);
+
+  creatingSearchableDocument.then(function(){
+
+    getVivoProfiles(SearchableDocument, ResultSet, next);
+
+  });
+
+};
+```
+
+If all goes well, you should see a JSON object full of relevant VIVO profiles in your console! Note that the data structure your Solr instance gives back may not contain ```response.docs```, check your configuration and make sure you are passing around the right data!
 
 ---
 <a name="populating-the-result-set"></a>
@@ -273,27 +287,43 @@ If all goes well, you should see a JSON object full of relevant VIVO profiles in
 
 Now that we have some profiles, let's get them into our [ResultSet](#resultset) object so we can send them to the client. 
 
-Assuming you followed the directions above, let's say you have some results from Solr stored in a variable called ```solrResults```. 
-
-You could add the following code to the function ```getVivoProfiles()```:
+Assuming you followed the directions above, let's modify our callback for ```gettingResults.then()``` (within our ```gettingVivoProfiles()``` function) to call a new function, which we'll define below. First, the new body of our ```.then()``` callback:
 
 ```javascript
-for (var i in solrResults){
-  var params ={
-    name: sanitizer.sanitize(results[i].name),
-    //Populate other params...
-    overview: sanitizer.sanitize(results[i].description)
-  }
-  ResultSet.addResult(params);
-}
+  gettingResults.then(function(results){
+    sendResults(results.response.docs, ResultSet, next);
+  });
+```
 
-ResultSet.send()
+All we're doing here is passing the profiles we got back from our Solr instance (```results.response.docs```) as the first parameter to a new function, defined below:
+
+
+```javascript
+var sendResults = function(solrResults, ResultSet, next){
+
+  var res, params;
+
+  for (var i in solrResults){
+    res = solrResults[i];
+    
+    params = {
+      name: sanitizer.sanitize(res.name),
+      //Populate other params...
+      overview: sanitizer.sanitize(res.description)
+    }
+
+    ResultSet.addResult(params);
+  }
+
+  ResultSet.send()
+
+};
 
 ```
 
 Here we are iterating through ```solrResults```, and adding results using the [ResultSet](#resultset) object's [addResult()](#resultsetaddresultparams) method.
 
-Once we're done, we call [ResultSet.send()](#resultsetsend), and our view engine renders the result set for the client.
+Once we're done, we call [ResultSet.send()](#resultsetsend) (make sure you're no longer calling this from within ```execute()```), and our view engine renders the result set for the client.
 
 Of course, this is a very simplistic example. Depending on how complex the data structure you get back from your search index is - you may have to do additional data marshaling or processing. You'll probably want to move functionality relevant to the ResultSet over to its own function, and do all sorts of other cool stuff as well. 
 
@@ -740,6 +770,3 @@ Finally, make sure the client side of the app knows where to find resources. You
 var SearchLight_Application_Host = 'http://somehostname.com';
 
 ```
-
--- 
-(mobile) +66 084-8783076
