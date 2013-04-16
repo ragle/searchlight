@@ -113,9 +113,11 @@
 </li>
 </ul>
 </li>
+<li> <a href="#deployment">Deploying the App</a>
+</li>
 </ul><p><a name="introduction"></a></p>
 
-<h1 class="topic-header">Introduction</h1>
+<h1>Introduction</h1>
 
 <p><a href="https://www.github.com/ragle/searchlight">Searchlight</a> is a simple application development framework that allows any organization with a VIVO database to quickly and easily deploy a VIVO searchlight application of their own.</p>
 
@@ -125,7 +127,7 @@
 
 <p><a name="quick-start-tutorial"></a></p>
 
-<h1 class="topic-header">Quick Start Tutorial</h1>
+<h1>Quick Start Tutorial</h1>
 
 <p><a name="setting-up-a-development-environment"></a></p>
 
@@ -160,20 +162,29 @@
 <span class="nt">&lt;/html&gt;</span>
 </pre></div>
 
-<p>Bookmarklet view templates exist already for you for both the application UI and the result sets (VIVO profiles). These can be found in <code>views/bar-iframe.html</code> and <code>results-iframe.html</code> respectively.</p>
+<p>Bookmarklet view templates exist already for you for the "skin" of both the bookmarklet (UI) and the result sets (VIVO profiles). These can be found in <code>views/bar-iframe.html</code> and <code>views/results-iframe.html</code> respectively.</p>
 
-<p>The default views are automatically managed for you - but if you want to customize them check out the section on <a href="#creating-a-custom-view-template">creating custom views</a>. </p>
+<p>The default UI and result set views are automatically managed and rendered for you on each request - but if you want to customize them check out the section on <a href="#creating-a-custom-view-template">creating custom views</a>. </p>
 
 <hr><p><a name="creating-a-widget"></a></p>
 
 <h3>Creating a Widget</h3>
 
-<p>You might also like to use a searchlight widget on one of your organization's pages. For example, you may have a news page that is updated regularly, and you'd like to always display VIVO profiles relevant to your latest updates. </p>
+<p>You might also like to use a searchlight widget on one of your organization's pages. For example, you may have a news page that is updated regularly and you'd like to always display VIVO profiles relevant to your latest updates. </p>
 
-<p>Below is a very simple example of an HTML document with an embedded searchlight widget. You can deploy as many widgets as you'd like, in concert with the bookmarklet app.</p>
+<p>Below is a very simple (and rather ugly) example of an HTML document with an embedded searchlight widget. You can deploy as many widgets as you'd like, in concert with the bookmarklet app.</p>
 
 <div class="highlight"><pre><span class="nt">&lt;html&gt;</span>
-  <span class="nt">&lt;head&gt;&lt;/head&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;style&gt;</span>
+    <span class="nf">#vsl-widget-frame</span><span class="p">{</span>
+      <span class="k">width</span><span class="o">:</span><span class="m">700px</span><span class="p">;</span>
+      <span class="k">height</span><span class="o">:</span><span class="m">100px</span><span class="p">;</span>
+      <span class="k">border</span><span class="o">:</span> <span class="nb">red</span> <span class="k">dashed</span> <span class="m">8px</span><span class="p">;</span>
+      <span class="k">background-color</span><span class="o">:</span> <span class="nb">yellow</span><span class="p">;</span> 
+    <span class="p">}</span>
+  <span class="nt">&lt;/style&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
   <span class="nt">&lt;body&gt;</span>
     <span class="nt">&lt;h1&gt;</span>My Great Searchlight Widget!<span class="nt">&lt;/h1&gt;</span>
     <span class="nt">&lt;h3&gt;</span> Here is some news about my organization!<span class="nt">&lt;/h3&gt;</span>
@@ -186,9 +197,9 @@
 <span class="nt">&lt;/html&gt;</span>
 </pre></div>
 
-<p>Widget view templates exist already for you for both the application UI and the result sets (VIVO profiles). These can be found in <code>views/bar-widget.html</code> and <code>results-widget.html</code> respectively.</p>
+<p>Markup exists for widget views already, and can be found in <code>views/bar-widget.html</code> and <code>views/results-widget.html</code>. These default views are automatically managed and rendered for you - but if you want to customize them check out the section on <a href="#creating-a-custom-view-template">creating custom views</a>.</p>
 
-<p>The default views are automatically managed for you - but if you want to customize them check out the section on <a href="#creating-a-custom-view-template">creating custom views</a>. </p>
+<p>Note that by default the iframe within widgets will use the same default styles as a bookmarklet. To learn how to include a custom stylesheet to style the widget iframe differently, check out the section on <a href="#public-assets-stylesheets-javascript-images">public assets</a>.</p>
 
 <hr><p><a name="writing-a-search-module"></a></p>
 
@@ -196,7 +207,7 @@
 
 <p>The framework expects your search module (<code>customizations/search.js</code>) to export a single function, <code>exports.execute(SearchableDocument, ResultSet, next){}</code>. </p>
 
-<p>On a fresh instalation of the framework, the following code exists in <code>customizations/search.js</code> to help get you started.</p>
+<p>On a fresh installation of the framework, the following code exists in <code>customizations/search.js</code> to help get you started.</p>
 
 <div class="highlight"><pre><span class="cm">/*</span>
 <span class="cm">*Module Dependencies</span>
@@ -307,13 +318,13 @@
 
 <p>Installing and configuring a search index falls outside the scope of both the searchlight application and this quick start guide. If you haven't already set up a search index for your VIVO database, you might try <a href="http://lucene.apache.org/solr/">Solr</a> or <a href="http://www.elasticsearch.org/">ElasticSearch</a>. We've successfully deployed searchlight apps using both, although ElasticSearch has performed better in our experience. </p>
 
-<p>Let's assume you have a Solr search index listening for requests at the url: <code>http://www.example.com/Solr/Select/</code>. </p>
+<p>Let's assume you have a Solr search index listening for requests at the uri: <code>http://www.example.com:8080/Solr/Select/</code>. </p>
 
 <p>Let's create a separate function to query it for profiles relevant to the text contained in our <code>SearchableDocument.queryText</code> property.  </p>
 
 <div class="highlight"><pre><span class="kd">var</span> <span class="nx">getVivoProfiles</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">SearchableDocument</span><span class="p">,</span> <span class="nx">ResultSet</span><span class="p">,</span> <span class="nx">Next</span><span class="p">){</span>
 
-  <span class="kd">var</span> <span class="nx">requestURL</span> <span class="o">=</span> <span class="s2">"http://www.example.com/Solr/Select/"</span>
+  <span class="kd">var</span> <span class="nx">requestURI</span> <span class="o">=</span> <span class="s2">"http://www.example.com:8080/Solr/Select/"</span>
 
   <span class="kd">var</span> <span class="nx">solrParams</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">"qt"</span><span class="o">:</span><span class="s2">"mlt"</span><span class="p">,</span>
@@ -323,7 +334,7 @@
     <span class="s2">"stream.body"</span><span class="o">:</span> <span class="nx">SearchableDocument</span><span class="p">.</span><span class="nx">queryText</span>
   <span class="p">};</span>
 
-  <span class="kd">var</span> <span class="nx">gettingResults</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">requestURL</span><span class="p">,</span> <span class="nx">solrParams</span><span class="p">,</span> <span class="nx">next</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">gettingResults</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">requestURI</span><span class="p">,</span> <span class="nx">solrParams</span><span class="p">,</span> <span class="nx">next</span><span class="p">);</span>
 
   <span class="nx">gettingResults</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">)){</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">hits</span><span class="p">);</span>
@@ -333,11 +344,11 @@
 
 </pre></div>
 
-<p>We first specify the URL we are making a request to, and some <a href="http://wiki.apache.org/solr/MoreLikeThis">params Solr will want</a> in <code>requestURL</code> and <code>solrParams</code> respectively. </p>
+<p>We first specify the uri we are making a request to, and some <a href="http://wiki.apache.org/solr/MoreLikeThis">params Solr will want</a> in <code>requestURI</code> and <code>solrParams</code> respectively. </p>
 
 <p>We then call the <a href="#the-request-module">request module</a>'s <a href="#posturi-opts-next">post()</a> function, which returns a promise to deliver the response as soon as it has arrived. </p>
 
-<p>Once the response arrives from the search index, our promise is resolved, and <code>gettingResults.then</code> executes the anonymous function we provided it. Note that the promise delivers the response data as a parameter (<code>results</code>) to our annonymous function. </p>
+<p>Once the response arrives from the search index, our promise is resolved, and <code>gettingResults.then</code> executes the anonymous function we provided it. Note that the promise delivers the response data as a parameter (<code>results</code>) to our anonymous function. </p>
 
 <p>You'll need to call the function we just created (<code>getVivoProfiles</code>) from within <code>execute()</code>. </p>
 
@@ -355,9 +366,9 @@
 
 <div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">solrResults</span><span class="p">){</span>
   <span class="kd">var</span> <span class="nx">params</span> <span class="o">=</span><span class="p">{</span>
-    <span class="nx">name</span><span class="o">:</span><span class="nx">results</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="nx">sanitizer</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">results</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="p">),</span>
     <span class="c1">//Populate other params...</span>
-    <span class="nx">overview</span><span class="o">:</span> <span class="nx">results</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">description</span>
+    <span class="nx">overview</span><span class="o">:</span> <span class="nx">sanitizer</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">results</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">description</span><span class="p">)</span>
   <span class="p">}</span>
   <span class="nx">ResultSet</span><span class="p">.</span><span class="nx">addResult</span><span class="p">(</span><span class="nx">params</span><span class="p">);</span>
 <span class="p">}</span>
@@ -384,24 +395,24 @@
 
 <p><a name="dependencies"></a></p>
 
-<h1 class="topic-header">Dependencies</h1>
+<h1>Dependencies</h1>
 
 <p><a name="client"></a></p>
 
 <h3>Client Side Dependencies</h3>
 
-<p>The client side dependencies are met for you within the <code>/public/javascripts/</code> directory. Currently, they include:</p>
+<p>The client side dependencies are met for you within the <code>public/javascripts/</code> directory. Currently, they include:</p>
 
 <ul>
 <li> <a href="http://api.jquery.com/">jQuery</a> - for DOM manipulation, UI functionality &amp; AJAX functionality</li>
 <li> <a href="http://ternarylabs.github.com/porthole/">Porthole</a> - To provide a proxy for cross domain requests to the searchlight server</li>
 </ul><p><a name="server"></a></p>
 
-<h3>server-side Dependencies</h3>
+<h3>Server-side Dependencies</h3>
 
 <p>All of these dependencies can be satisfied automatically by running <code>npm install</code> after cloning into the searchlight repo. (See the <a href="#quick-start-tutorial">quick start tutorial</a> on <a href="#setting-up-a-development-environment-linux">setting up a dev environment</a> for more details). </p>
 
-<p>A number of fantastic 3rd party node.js packages / libraries were used in the development of searchlight. In general, the use of these libraries is abstracted for you and you will not need to use them in your code - with the exception of a search index client, sanitizr and perhaps bond if you like to handle asynchronous operations with promises. </p>
+<p>A number of fantastic 3rd party node.js packages / libraries were used in the development of searchlight. In general, the use of these libraries is abstracted for you and you will not need to use them in your code - with the exception of sanitizr and perhaps bond if you like to handle asynchronous operations with promises. </p>
 
 <ul>
 <li> <a href="https://github.com/visionmedia/express">express</a> - As a router and web application framework</li>
@@ -415,7 +426,7 @@
 <li> <a href="https://github.com/flatiron/winston">winston</a> - For async error logging / reporting</li>
 </ul><p><a name="directory-structure"></a></p>
 
-<h1 class="topic-header">Directory Structure</h1>
+<h1>Directory Structure</h1>
 
 <p>You should really only ever be modifying code in the <code>customizations/</code> directory, unless you need to do some framework hacking for your use case.</p>
 
@@ -463,15 +474,15 @@
 
 <p><a name="objects-available-to-your-search-module"></a></p>
 
-<h1 class="topic-header">Objects available to the search module</h1>
+<h1>Objects available to the search module</h1>
 
 <p><a name="searchabledocument"></a></p>
 
-<h2 class="object-class">SearchableDocument</h2>
+<h2>SearchableDocument</h2>
 
-<p>server-side DOM wrapper for search request sent from the client. Enables extraction of main content and removal of HTML, JavaScript and CSS.</p>
+<p>Server-side DOM wrapper for documents sent from the client for searches. Enables extraction of main content and removal of HTML and JavaScript.</p>
 
-<p><a href="#extending-the-searchabledocument-object">The SearchableDocument object can be easily extended</a> with methods specific to your use case. Note that manipulating parent SearchableDocument properties prepended by '_' via non-parent methods may have unintended consequences.</p>
+<p><a href="#extending-the-searchabledocument-object">The SearchableDocument object can be easily extended</a> with methods specific to your use case. Note that manipulating parent SearchableDocument properties prepended by '_' via non-parent methods may have unintended consequences. </p>
 
 <p><a name="properties"></a></p>
 
@@ -515,11 +526,11 @@
 
 <ul>
 <li> <code>readabilityParse</code> - <em>boolean</em> - set to True if you want node-readability to attempt to extract main content from the DOM.</li>
-</ul><p><strong>Description</strong> - Extract main content with readability if <code>readabilityParse</code> is set to true and set the <code>_MCHTML</code> and <code>MCText</code> properties.</p>
+</ul><p><strong>Description</strong> - Attempt to set <code>_MCHTML</code> &amp; <code>_MCText</code> properties if <code>readabilityParse</code> is set to true. Set <code>queryText</code> to the best text available (<code>_MCText</code> or <code>_DOM</code>, stripped of HTML).</p>
 
 <p><strong>Returns</strong> - void</p>
 
-<p><strong>Post Condition</strong> - <code>SearchableDocument.queryText</code> is available to be sent to a search index of your choice</p>
+<p><strong>Post Condition</strong> - <code>queryText</code> is available to be sent to a search index of your choice</p>
 
 <h2><a name="searchabledocumentreadabilityparse"></a></h2>
 
@@ -527,13 +538,13 @@
 
 <p><strong>Params</strong> - none</p>
 
-<p><strong>Description</strong> - attempts to extract main content from a DOM. See <a href="https://github.com/arrix/node-readability">node-readability</a> more information. </p>
+<p><strong>Description</strong> - attempts to extract main content from a DOM. See <a href="https://github.com/arrix/node-readability">node-readability</a> for more information. </p>
 
 <p>Note that using readability almost <em>always</em> improves search results in our experience - but it can be expensive. On a basic AWS instance, large documents (&gt;3000 words) took up to 5 seconds during testing. Smaller documents tend to process very quickly, however. </p>
 
 <p><strong>Returns</strong> - void</p>
 
-<p><strong>Post Condition</strong> - <code>SearchableDocument._MCHTML</code> is populated with the document's main content as HTML</p>
+<p><strong>Post Condition</strong> - <code>_MCHTML</code> is populated with the document's main content as HTML</p>
 
 <hr><h3><code>SearchableDocument.setMCText()</code></h3>
 
@@ -541,11 +552,11 @@
 
 <p><strong>Description</strong> - sets the <code>_MCText</code> property to the contents of <code>_MCHTML</code>, stripped of HTML</p>
 
-<p><strong>Returns</strong> - true on success, false on failure (i.e. <code>SearchableDocument._MCHTML</code> has not yet been set)</p>
+<p><strong>Returns</strong> - true on success, false on failure (i.e. <code>_MCHTML</code> has not yet been set)</p>
 
-<p><strong>Pre-Condition</strong> - <code>SearchableDocument._MCHTML</code> is populated with the document's main content as HTML</p>
+<p><strong>Pre-Condition</strong> - <code>_MCHTML</code> is populated with the document's main content as HTML</p>
 
-<p><strong>Post Condition</strong> - <code>SearchableDocument._MCText</code> is populated with the document's main content as Text</p>
+<p><strong>Post Condition</strong> - <code>_MCText</code> is populated with the document's main content as Text</p>
 
 <hr><h3><code>SearchableDocument.stripHTML(html)</code></h3>
 
@@ -586,7 +597,7 @@
 
 <p><strong>Returns</strong> - void </p>
 
-<p><strong>Post Condition</strong> - <code>SearchableDocument.wordCount</code> property is set. </p>
+<p><strong>Post Condition</strong> - <code>wordCount</code> property is set. </p>
 
 <p>Note that it will check <code>queryText</code> first, but if it doesn't find anything, it will back track through <code>_MCText</code> and <code>_DOM</code>, so you can call this function immediately within your search module (before <code>init()</code>), if for example you wanted to write some heuristics to deal with documents of different sizes. </p>
 
@@ -598,7 +609,7 @@
 
 <p>You may need to augment the SearchableDocument object with methods or properties unique to your use case. You can encapsulate this data and behaviour by modifying the object literal <code>ExtendSearchableDocument</code> within <code>customizations/SearchableDocument.js</code>.</p>
 
-<p>Any properties or methods you add to this object literal will be added to the prototype of the <code>SearchableDocument</code> object before it is instantiated. You can therefore use the <code>this</code> operator safely, as the context of <code>this</code> will be the instance of <code>SearchableDocument</code> that you receive in your search module (<code>customizations/search.js</code>).</p>
+<p>Any properties or methods you add to this object literal will be added to the prototype of the <code>SearchableDocument</code> object before it is instantiated, and thus made available to you in your search module.</p>
 
 <p><strong>Example</strong></p>
 
@@ -620,9 +631,9 @@
 
 <hr><p><a name="resultset"></a></p>
 
-<h2 class="object-class">ResultSet</h2>
+<h2>ResultSet</h2>
 
-<p>The <code>ResultSet</code> Object provides a simple API to create a uniform data structure that the default results view template can consume.</p>
+<p>The <code>ResultSet</code> Object provides a simple API to create a uniform data structure that the default results (VIVO profile) view templates can consume.</p>
 
 <p>More importantly, a method is included to <code>send()</code> your result set to the rendering engine once you have finished populating it.</p>
 
@@ -637,7 +648,7 @@
 <h3><code>_numResults</code></h3>
 
 <p><em>int</em> - An integer containing the number of results in your result set. Used and incremented by 
-<code>addResult()</code> to generate part of a composite key for a DOM id for each result that is added to the result set. </p>
+<code>addResult()</code> to generate part of a composite key for DOM ids for results / profiles. </p>
 
 <h3><code>score</code></h3>
 
@@ -649,7 +660,7 @@
 
 <p><a name="resultsetaddresultparams"></a></p>
 
-<h3><code>ResultSet.addResult({params})</code></h3>
+<h3><code>ResultSet.addResult(params)</code></h3>
 
 <p><strong>Params</strong></p>
 
@@ -662,18 +673,15 @@
 <li> <strong>params.institution_name</strong> - <em>String</em> - The name of the institution as it should be displayed next to an overview</li>
 <li> <strong>params.institution_shortname</strong> - <em>String</em> - The shortened name of the institution as it should be displayed in the results view</li>
 <li> <strong>params.image_url</strong> - <em>String</em> - The path to the image / thumbnail associated with the individual in the result view</li>
-<li> <strong>params.css_image_class</strong> - <em>String</em> - An optional class if you intend to extend styles for the image (e.g. change size, etc)</li>
-<li> <strong>params.css_id</strong> - <em>String</em> - A css id used to define default styles for the result</li>
 <li> <strong>params.uri</strong> - <em>String</em> - The URI of the individual / organization's VIVO profile</li>
 <li> <strong>params.overview</strong> - <em>String</em> - The bio, description or overview text describing the individual / organization</li>
-<li> <strong>params.topics</strong> - <em>Array</em> - Any topics, keywords or areas of research associated with the individual or association</li>
 </ul>
 </li>
-</ul><p><strong>Description</strong> - accepts a params object containing meta data about a result. It will add this meta data to an array element of <code>ResultSet.list</code>, which will be available to your view template. </p>
+</ul><p><strong>Description</strong> - accepts a params object containing meta data about a result. It will add this meta data to an array element of <code>list</code>.</p>
 
-<p>Note that all of the above properties of <code>params</code> are optional. These are merely listed here for your convenience, as the default results view template expeects them.</p>
+<p>Note that all of the above properties of <code>params</code> are optional. These are merely listed here for your convenience, as the default results view template expects them.</p>
 
-<p>If you have defined a custom view template, pass in what you need instead. For example, <code>ResultSet.addResult({DepartmentName:'Sociology'})</code> would add a result with a <code>DepartmentName</code> property, which would be available to you in your custom results view template.</p>
+<p>If you have defined a custom view template, pass in what you need instead. For example, <code>ResultSet.addResult({DepartmentName:'Sociology'})</code> would add a result with a <code>DepartmentName</code> property, which would be available to you in your custom results view template in the <code>results</code> variable.</p>
 
 <p><strong>Returns</strong> - void</p>
 
@@ -695,17 +703,17 @@
 
 <p><strong>Params</strong>: none</p>
 
-<p><strong>Description</strong> - Passes your <code>ResultSet</code> instance to the rendering engine, signaling it that your processing is complete and it is safe to send data to the client.</p>
+<p><strong>Description</strong> - Passes your <code>ResultSet</code> instance to the rendering engine, signaling it that your processing is complete and it is safe to send data to the client. Two variables will be made available to the view template - <code>results</code> (containing an array of result objects / profiles) and <code>score</code> containing the value of <code>ResultSet.score</code>. </p>
 
 <p><a name="making-requests-to-a-search-index"></a></p>
 
-<h1 class="topic-header">Making Requests to a search index</h1>
+<h1>Making Requests to a search index</h1>
 
 <p>Within your search module (<code>customizations/search.js</code>), you will need to query a search index for VIVO profiles relevant to the text you received from the client. A request module is available for you in <code>lib/request.js</code> that makes this process easier.</p>
 
 <p><a name="the-request-module"></a></p>
 
-<h1 class="topic-header">The Request Module</h1>
+<h1>The Request Module</h1>
 
 <p>The request module offers a thin wrapper for <a href="https://github.com/mikeal/request">request</a> that abstracts error handling and returns promises for responses using <a href="https://github.com/pete-otaqui/bond">bond</a>. Bond is a super simple promises implementation that is really easy to use. See the examples below for more details.</p>
 
@@ -757,7 +765,7 @@
 
 <p><a name="creating-a-custom-view-template"></a></p>
 
-<h1 class="topic-header">Creating a Custom View Template</h1>
+<h1>Creating a Custom View Template</h1>
 
 <p>Using custom view templates for a bookmarklet iframe, widget or result set is easy. Simply follow the naming conventions you see inside <code>customizations/views/</code>. For example - if you would like to use a custom iframe template, replace <code>bar-iframe.html.example</code> with your own template, <code>bar-iframe.html</code>. </p>
 
@@ -765,11 +773,11 @@
 
 <p><a name="public-assets-stylesheets-javascript-images"></a></p>
 
-<h1 class="topic-header">Public Assets</h1>
+<h1>Public Assets</h1>
 
-<p>Two publicly available static directories exist in every searchlight application. The first, is the default <code>/public</code> directory, which stores image, javascript and style assets for the default view templates.</p>
+<p>Two publicly available static directories exist in every searchlight application. The first, is the default <code>public/</code> directory, which stores image, javascript and style assets for the default view templates.</p>
 
-<p>The second can be found at <code>customizations/public</code>, and is used for adding assets for custom view teplates. Anything you put in this directory will be available at <code>http://example.com/custom/</code>. </p>
+<p>The second can be found at <code>customizations/public</code>, and is used for adding assets for custom view templates. Anything you put in this directory will be available at <code>http://example-host.com/custom/</code>. </p>
 
 <p>So, to include a custom style sheet within your custom view template in <code>/customizations/views</code>: </p>
 
@@ -778,22 +786,22 @@
 
 <p><a name="custom-client-side-behavior"></a></p>
 
-<h1 class="topic-header">Custom Client Side Behavior</h1>
+<h1>Custom Client Side Behavior</h1>
 
-<p>Currently, there are very few avenues for modifying application specific client side behavior without getting in and hacking framework code in <code>lib/client/</code>. If you need to add analytics code, or some other JavaScript for your use case, you can add it in <code>customizations/public/javascripts/custom.js</code>. </p>
+<p>Currently, there are very few avenues for modifying application specific client side behavior aside from hacking framework code in <code>lib/client/</code>. If you need to add analytics code, or some other JavaScript for your use case, you can add it in <code>customizations/public/javascripts/custom.js</code>. </p>
 
 <p>This file will be appended to the rest of the client side JavaScript and minified during the <a href="#building-the-front-end">front end build process</a>.</p>
 
 <p><a name="building-the-front-end"></a></p>
 
-<h1 class="topic-header">Building the Front End</h1>
+<h1>Building the Front End</h1>
 
 <p>The default front end is built for you already. If you need to rebuild it for some reason (e.g. you've been doing some hacking in <code>lib/client/</code>) you can do so by adding <code>-b</code> as an option when you start the server. </p>
 
 <div class="highlight"><pre><span class="nv">$ </span>node app.js -b
 </pre></div>
 
-<p>This can also be accomplished with the grunt command line tool, using <a href="http://gruntjs.com/getting-started">grunt</a>: </p>
+<p>This can also be accomplished with the <a href="http://gruntjs.com/getting-started">grunt</a> command line tool: </p>
 
 <div class="highlight"><pre><span class="nv">$ </span>grunt default
 </pre></div>
@@ -802,7 +810,7 @@
 
 <p><a name="error-handling"></a></p>
 
-<h1 class="topic-header">Error Handling</h1>
+<h1>Error Handling</h1>
 
 <p><a name="handling-an-error"></a></p>
 
@@ -828,13 +836,27 @@
 
 <p><a name="error-logging"></a></p>
 
-<h3 id="err-log">Error Logging</h3>
+<h3>Error Logging</h3>
 
 <p><code>lib/ErrorHandler.js</code> contains a thin wrapper for <a href="https://github.com/flatiron/winston">Winston</a>. It is used internally as middleware for express. Both console and file system transports are used for logging, with errors logged in <code>/logs/error.log.json</code>. See the Winston documentation for details about querying the log file programmaticly - which can be quite useful for testing and debugging. </p>
 
 <p>Caught exceptions are logged as run time errors. Uncaught exceptions are logged as such, and the app is killed to prevent attempts to handle future requests in an unknown state. </p>
 
 <p>For maximum stability, it is recommended that you use a service like <a href="https://github.com/nodejitsu/forever">forever</a> to automatically restart the server in the event of an uncaught exception.</p>
+
+<p><a name="deployment"></a></p>
+
+<h1>Deploying the App</h1>
+
+<p>For details about deploying a node app, check out the documentation here. </p>
+
+<p>Consider running a service like forever to restart the app in the event of uncaught exceptions. </p>
+
+<p>Finally, make sure the client side of the app knows where to find resources. You can do this by editing the <code>SearchLight_Application_Host</code> variable in <code>customizations/public/javascripts/config.js</code>. The host is set to <code>http://127.0.0.1:3000</code> for local development by default.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">SearchLight_Application_Host</span> <span class="o">=</span> <span class="s1">'http://somehostname.com'</span><span class="p">;</span>
+
+</pre></div>
       </section>
     </div>
 
