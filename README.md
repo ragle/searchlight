@@ -19,7 +19,7 @@ To learn more about VIVO Searchlight apps and try out an application created wit
 
 For more detailed help getting started, check out our [quick start tutorial](http://docs.vivosearchlight.org/#quick-start-tutorial). 
 
-Create a very simple bookmarklet to host the client side app:
+Create a simple bookmarklet to host the client side app:
 
 ```html
 <html>
