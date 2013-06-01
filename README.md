@@ -56,4 +56,4 @@ If you find a bug, please log an issue and submit a patch. If you run into a pro
 The Searchlight Framework is currently a prototype in the earliest stages of development. It has been used to deploy [a simple demo](http://about.vivosearchlight.org), and a [proof-of-concept app for the Agrivivo Project](http://agrivivo.net/tool/searchlight). Your mileage may vary using it to create production apps.
 
 ##License
-Searchlight is available under a [Creative Commons Attribution 3.0](http://creativecommons.org/licenses/by/3.0/) License. 
+Searchlight is available under an [AGPL-3.0](http://www.gnu.org/licenses/agpl.html) License. 
