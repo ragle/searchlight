@@ -7,7 +7,9 @@ A framework for creating simple applications that find [VIVO profiles](http://ww
 To learn more about VIVO Searchlight apps and try out an application created with The Searchlight Framework, check out our [about page](http://about.vivosearchlight.org). 
 
 
-##Installation 
+##Documentation 
+
+###Installation 
 
 *  [Install node.js version 0.8.12](https://github.com/joyent/node/wiki/Installation#building-on-gnulinux-and-other-unix)
 *  ```$ git clone http://git.github.com/ragle/searchlight```
@@ -15,7 +17,7 @@ To learn more about VIVO Searchlight apps and try out an application created wit
 *  ```$ npm install```
 
 
-##Quick Start
+###Quick Start
 
 For more detailed help on getting started, check out our [quick start tutorial](http://docs.vivosearchlight.org/#quick-start-tutorial). 
 
@@ -47,7 +49,7 @@ Congrats, you've just processed your first VIVO searchlight request, from start 
 
 Have a look at the [documentation](http://docs.vivosearchlight.org) for more details about building VIVO searchlight apps. 
 
-##Documentation
+###Full Documentation / API Reference
 There is detailed documentation [available here](http://docs.vivosearchlight.org). Please submit a pull request on the gh-pages branch of this repository if you find any documentation errors. The Markdown version of the docs can be found [here](https://github.com/ragle/searchlight/blob/gh-pages/assets/docs_markdown.md). 
 
 ##Issues, Problems and Bugs
