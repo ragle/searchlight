@@ -57,5 +57,16 @@ If you find a bug, please log an issue and submit a patch. If you run into a pro
 
 The Searchlight Framework is currently a prototype in the earliest stages of development. It has been used to deploy [a simple demo](http://about.vivosearchlight.org), and a [proof-of-concept app for the Agrivivo Project](http://agrivivo.net/tool/searchlight). Your mileage may vary using it to create production apps.
 
+### Change log
+
+#### v0.1.1
+
+*  Migrates from node.js v0.8.12 to v0.12.0 stable
+*  [Migrates from express 3.x to express 4.10.1](https://github.com/strongloop/express/wiki/Migrating-from-3.x-to-4.x)
+*  Upgrades error logging to support `development`, `testing`, `production` environments
+*  Replaces original node.js port of Arc90's readability with _substantially_ faster (and recently maintained) [readabilitySAX](https://www.npmjs.com/package/readabilitySAX).
+*  Replaces node jquery with html-to-text for extracting text from HTML
+*  Better XSS protection / javascript stripping wtih [caja-sanitizer](https://www.npmjs.com/package/sanitizer)
+
 ##License
 Searchlight is available under an [AGPL-3.0](http://www.gnu.org/licenses/agpl.html) License. 
