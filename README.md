@@ -62,7 +62,10 @@ The Searchlight Framework is currently a prototype in the earliest stages of dev
 #### v0.1.1
 
 *  Migrates from node.js v0.8.12 to v0.12.0 stable
+  *  Eliminates [CVE-2013-4450](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-4450)
+  *  Eliminates [CVE-2014-5256](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5256)
 *  [Migrates from express 3.x to express 4.10.1](https://github.com/strongloop/express/wiki/Migrating-from-3.x-to-4.x)
+  *  Eliminates [CVE-2014-6394](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-6394)
 *  Upgrades error logging to support `development`, `testing`, `production` environments
 *  Replaces original node.js port of Arc90's readability with _substantially_ faster (and recently maintained) [readabilitySAX](https://www.npmjs.com/package/readabilitySAX).
 *  Replaces node jquery with html-to-text for extracting text from HTML
