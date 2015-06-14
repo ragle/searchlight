@@ -11,7 +11,7 @@ To learn more about VIVO Searchlight apps and try out an application created wit
 
 ###Installation 
 
-*  [Install node.js version 0.8.12](https://github.com/joyent/node/wiki/Installation#building-on-gnulinux-and-other-unix)
+*  [Install node.js version 0.12.0](https://github.com/joyent/node/wiki/Installation#building-on-gnulinux-and-other-unix)
 *  ```$ git clone http://git.github.com/ragle/searchlight```
 *  ```$ cd searchlight```
 *  ```$ npm install```
