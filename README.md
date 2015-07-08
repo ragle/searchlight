@@ -11,7 +11,7 @@ To learn more about VIVO Searchlight apps and try out an application created wit
 
 ###Installation 
 
-*  [Install node.js version 0.12.0](https://github.com/joyent/node/wiki/Installation#building-on-gnulinux-and-other-unix)
+*  [Install node.js version 0.12.6](https://github.com/joyent/node/wiki/Installation#building-on-gnulinux-and-other-unix)
 *  ```$ git clone http://git.github.com/ragle/searchlight```
 *  ```$ cd searchlight```
 *  ```$ npm install```
@@ -58,6 +58,12 @@ If you find a bug, please log an issue and submit a patch. If you run into a pro
 The Searchlight Framework is currently a prototype in the earliest stages of development. It has been used to deploy [a simple demo](http://about.vivosearchlight.org), and a [proof-of-concept app for the Agrivivo Project](http://agrivivo.net/tool/searchlight). Your mileage may vary using it to create production apps.
 
 ### Change log
+
+#### v0.1.2
+
+*  Migrates from node.js v0.12.0 stable to v0.12.6 stable
+  *  Framework tested and working against v0.12.6 - no changes needed from Searchlight v0.1.1 apart from updating your version of node...
+*  Eliminates out-of-band write in V8's utf-8 decoder (DoS vulnerability) - see [--1--](http://www.openwall.com/lists/oss-security/2015/07/05/1)[--2--](http://blog.nodejs.org/2015/07/03/node-v0-12-6-stable/)
 
 #### v0.1.1
 
