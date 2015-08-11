@@ -1,6 +1,6 @@
 searchlight
 ===========
-A framework for creating simple applications that find [VIVO profiles](http://www.vivoweb.org) relevant to content in the user's browser. 
+Node.js middleware for creating simple applications that find [VIVO profiles](http://www.vivoweb.org) relevant to content in the user's browser. 
 
 
 ##Demo
