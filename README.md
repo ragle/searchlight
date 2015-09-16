@@ -2,7 +2,6 @@ searchlight
 ===========
 Node.js middleware for creating applications that find [VIVO profiles](http://www.vivoweb.org) relevant to content in the user's browser. 
 
-
 ##Demo
 To learn more about VIVO Searchlight apps and try out an application created with Searchlight, check out our [about page](http://about.vivosearchlight.org). 
 
