@@ -14,7 +14,6 @@ To learn more about searchlight and how it's been used - check out our [about pa
 *  ```$ cd searchlight```
 *  ```$ npm install```
 
-
 ###Quick Start
 
 For more detailed help on getting started, check out our [quick start tutorial](http://docs.vivosearchlight.org/#quick-start-tutorial). 
