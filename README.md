@@ -2,11 +2,8 @@ searchlight
 ===========
 Node.js middleware for creating applications that find [VIVO profiles](http://www.vivoweb.org) relevant to content in the user's browser. 
 
-##Demo
-To learn more about VIVO Searchlight apps and try out an application created with Searchlight, check out our [about page](http://about.vivosearchlight.org). 
-
-**update - 08/28/15** - Websites that follow current security best prctices of forcing SSL (e.g. wikipedia, github, google news etc.) cause [mixed content errors](https://developer.mozilla.org/en-US/docs/Security/MixedContent/How_to_fix_website_with_mixed_content) in most modern browsers for the version of Searchlight that serves results for the demo app. Due to some administrative changes beyond our control, the Searchlight team currently doesn't have access to the server where this demo is hosted. We are working on fixing this, stay tuned.
-
+##About
+To learn more about searchlight and how it's been used - check out our [about page](http://about.vivosearchlight.org). 
 
 ##Documentation 
 
